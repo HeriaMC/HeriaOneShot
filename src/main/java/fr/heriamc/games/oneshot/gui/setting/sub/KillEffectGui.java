@@ -13,9 +13,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class KillEffectGui extends SubSettingGui<KillCosmetics> {
 
     public KillEffectGui(OneShotGame game, OneShotPlayer gamePlayer, HeriaMenu beforeMenu) {
@@ -34,13 +31,20 @@ public class KillEffectGui extends SubSettingGui<KillCosmetics> {
     @Override
     protected ItemBuilder item(KillCosmetics cosmetic, int i, int i1) {
         var icon = new ItemBuilder(cosmetic.getIcon());
-        List<String> lore = new ArrayList<>();
 
         if (gamePlayer.hasSelected(CosmeticType.KILL_EFFECT, cosmetic))
-            icon.addEnchant(Enchantment.LUCK, 1).flag(ItemFlag.HIDE_ENCHANTS);
+            icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
 
         return icon.setName(cosmetic.getName())
-                .setLoreWithList(lore)
+                .setLoreWithList(
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()) ?
+                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice(),
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
+                                ? "§6§l❱ §eClique pour équiper"
+                                : "§6§l❱ §eClique pour acheter"
+                )
                 .onClick(event -> {
                     // TODO: open confirm buy gui
                 });

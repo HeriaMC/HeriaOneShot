@@ -1,10 +1,10 @@
 package fr.heriamc.games.oneshot.listener;
 
 import fr.heriamc.games.api.pool.GameManager;
+import fr.heriamc.games.engine.ffa.player.FFAGamePlayerState;
 import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
-import fr.heriamc.games.oneshot.player.OneShotPlayerState;
 import fr.heriamc.games.oneshot.setting.message.OneShotKillStreakMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -16,25 +16,30 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.EnumSet;
 
-public record PlayerDamageListener(GameManager<OneShotGame> gameManager) implements Listener {
+public class PlayerDamageListener implements Listener {
 
-    // NEED TO BE MOVED AWAY
-    private static final EnumSet<EntityDamageEvent.DamageCause> damageCauses = EnumSet.of(
-            EntityDamageEvent.DamageCause.VOID,
-            EntityDamageEvent.DamageCause.FALL,
-            EntityDamageEvent.DamageCause.SUFFOCATION,
-            EntityDamageEvent.DamageCause.FALLING_BLOCK,
-            EntityDamageEvent.DamageCause.LAVA,
-            EntityDamageEvent.DamageCause.FIRE,
-            EntityDamageEvent.DamageCause.FIRE_TICK,
-            EntityDamageEvent.DamageCause.DROWNING,
-            EntityDamageEvent.DamageCause.BLOCK_EXPLOSION,
-            EntityDamageEvent.DamageCause.ENTITY_EXPLOSION,
-            EntityDamageEvent.DamageCause.LIGHTNING,
-            EntityDamageEvent.DamageCause.MAGIC,
-            EntityDamageEvent.DamageCause.POISON,
-            EntityDamageEvent.DamageCause.WITHER
-    );
+    private final GameManager<OneShotGame> gameManager;
+    private final EnumSet<EntityDamageEvent.DamageCause> damageCauses;
+
+    public PlayerDamageListener(GameManager<OneShotGame> gameManager) {
+        this.gameManager = gameManager;
+        this.damageCauses = EnumSet.of(
+                EntityDamageEvent.DamageCause.VOID,
+                EntityDamageEvent.DamageCause.FALL,
+                EntityDamageEvent.DamageCause.SUFFOCATION,
+                EntityDamageEvent.DamageCause.FALLING_BLOCK,
+                EntityDamageEvent.DamageCause.LAVA,
+                EntityDamageEvent.DamageCause.FIRE,
+                EntityDamageEvent.DamageCause.FIRE_TICK,
+                EntityDamageEvent.DamageCause.DROWNING,
+                EntityDamageEvent.DamageCause.BLOCK_EXPLOSION,
+                EntityDamageEvent.DamageCause.ENTITY_EXPLOSION,
+                EntityDamageEvent.DamageCause.LIGHTNING,
+                EntityDamageEvent.DamageCause.MAGIC,
+                EntityDamageEvent.DamageCause.POISON,
+                EntityDamageEvent.DamageCause.WITHER
+        );
+    }
 
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player victim) {
@@ -98,7 +103,7 @@ public record PlayerDamageListener(GameManager<OneShotGame> gameManager) impleme
 
             if (gamePlayer == null) return;
 
-            if (gamePlayer.getPlayerState() == OneShotPlayerState.IN_LOBBY)
+            if (gamePlayer.getState() == FFAGamePlayerState.IN_LOBBY)
                 event.setCancelled(true);
 
             if (damageCauses.contains(event.getCause())) {
@@ -140,7 +145,7 @@ public record PlayerDamageListener(GameManager<OneShotGame> gameManager) impleme
         game.getMessage().sendDistanceMessage((int) distance, shooter);
 
         victim.getCraftPlayer().getHandle().getDataWatcher().watch(9, (byte) 0);
-        game.getLobby().setupPlayer(victim);
+        game.getLobby().onSetup(game, victim);
     }
 
     private void handleDeath(OneShotGame game, OneShotPlayer attacker, OneShotPlayer victim) {
@@ -151,7 +156,7 @@ public record PlayerDamageListener(GameManager<OneShotGame> gameManager) impleme
         }
 
         victim.onDeath();
-        game.getLobby().setupPlayer(victim);
+        game.getLobby().onSetup(game, victim);
     }
 
     private void sendActionBar(OneShotGame game, OneShotPlayer attacker, OneShotPlayer victim, String distance) {

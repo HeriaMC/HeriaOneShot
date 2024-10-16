@@ -36,11 +36,19 @@ public class SwordGui extends SubSettingGui<SwordCosmetics> {
         var icon = new ItemBuilder(cosmetic.getIcon());
         List<String> lore = new ArrayList<>();
 
-        if (gamePlayer.hasSelected(CosmeticType.SOUND_EFFECT, cosmetic))
-            icon.addEnchant(Enchantment.LUCK, 1).flag(ItemFlag.HIDE_ENCHANTS);
+        if (gamePlayer.hasSelected(CosmeticType.SWORD, cosmetic))
+            icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
 
         return icon.setName(cosmetic.getName())
-                .setLoreWithList(lore)
+                .setLoreWithList(
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()) ?
+                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice(),
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
+                                ? "§6§l❱ §eClique pour équiper"
+                                : "§6§l❱ §eClique pour acheter"
+                )
                 .flag(ItemFlag.HIDE_ATTRIBUTES)
                 .onClick(event -> {
                     // TODO: open confirm buy gui

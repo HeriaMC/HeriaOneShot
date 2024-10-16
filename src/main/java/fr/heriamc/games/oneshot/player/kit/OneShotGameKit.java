@@ -2,12 +2,10 @@ package fr.heriamc.games.oneshot.player.kit;
 
 import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.engine.kit.GamePlayerKit;
-import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetic;
-import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetics;
-import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetic;
-import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
-import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
+import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetic;
+import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetic;
+import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -29,11 +27,11 @@ public class OneShotGameKit extends GamePlayerKit<OneShotPlayer> {
 
     @Override
     public void setup() {
+        setItem(0, new ItemBuilder(swordCosmetic.getSword()).setName("§6Épée §8(§73 coups§8)")
+                .setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build());
+
         setItem(1, new ItemBuilder(Material.BOW)
                 .setName("§6Arc §8(§71 coup§8)").setInfinityDurability().flag(ItemFlag.HIDE_UNBREAKABLE).build());
-
-        setItem(9, new ItemBuilder(Material.ARROW)
-                .setName("§6Flèche").build());
 
         setItem(2, new ItemBuilder(Material.DIAMOND_PICKAXE)
                 .setName("§6Pioche §8(§7Efficacité 4§8)")
@@ -41,17 +39,9 @@ public class OneShotGameKit extends GamePlayerKit<OneShotPlayer> {
                 .setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES)
                 .flag(ItemFlag.HIDE_ENCHANTS).flag(ItemFlag.HIDE_UNBREAKABLE).build());
 
-        if (swordCosmetic != null)
-            setItem(0, new ItemBuilder(swordCosmetic.getSword()).setName("§6Épée §8(§73 coups§8)")
-                    .setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build());
-        else
-            setItem(0, new ItemBuilder(SwordCosmetics.WOOD.getSword()).setName("§6Épée §8(§73 coups§8)")
-                    .setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build());
+        setItem(3, new ItemBuilder(blockCosmetic.getMaterial(), 64).setName("§6Blocs §8(§7Illimité§8)").build());
 
-        if (blockCosmetic != null)
-            setItem(3, new ItemBuilder(blockCosmetic.getMaterial(), 64).setName("§6Blocs §8(§7Illimité§8)").build());
-        else
-            setItem(3, new ItemBuilder(BlockCosmetics.CLAY.getMaterial(), 64).setName("§6Blocs §8(§7Illimité§8)").build());
+        setItem(9, new ItemBuilder(Material.ARROW).setName("§6Flèche").build());
     }
 
     public void changeBlock(Material material) {

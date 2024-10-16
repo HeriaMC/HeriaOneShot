@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public enum SwordCosmetics implements SwordCosmetic {
@@ -25,9 +28,15 @@ public enum SwordCosmetics implements SwordCosmetic {
     private final String id, name;
     private final Material sword;
 
-    private double price;
+    private int price;
     private HeriaRank requiredRank;
     private boolean purchasable;
+
+    public static final List<SwordCosmetics> swords = Arrays.asList(values());
+
+    public static SwordCosmetic getFromId(String id) {
+        return swords.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(WOOD);
+    }
 
     public String getId() {
         return "oneshot.swords." + id;
@@ -53,7 +62,7 @@ public enum SwordCosmetics implements SwordCosmetic {
     @Override
     public void buy(OneShotPlayer gamePlayer) {
         gamePlayer.getUnlockedCosmetics().unlock(id);
-        gamePlayer.getPoints().remove(price);
+        gamePlayer.getPoints().remove((double) price);
     }
 
     @Override
@@ -67,7 +76,7 @@ public enum SwordCosmetics implements SwordCosmetic {
     }
 
     @Override
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

@@ -10,7 +10,7 @@ public interface Cosmetic {
     String getName();
 
     Material getIcon();
-    double getPrice();
+    int getPrice();
     HeriaRank getRequiredRank();
 
     boolean isPurchasable();
@@ -18,7 +18,7 @@ public interface Cosmetic {
     void select(OneShotPlayer gamePlayer);
     void deselect(OneShotPlayer gamePlayer);
 
-    void setPrice(double price);
+    void setPrice(int price);
     void setRequiredRank(HeriaRank requiredRank);
     void setPurchasable(boolean purchasable);
 

@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public enum KillCosmetics implements KillCosmetic {
@@ -17,10 +20,16 @@ public enum KillCosmetics implements KillCosmetic {
     private final String id, name;
 
     private final Material icon;
-    private double price;
+    private int price;
     private HeriaRank requiredRank;
 
     private boolean purchasable;
+
+    public static final List<KillCosmetics> effects = Arrays.asList(values());
+
+    public static KillCosmetic getFromId(String id) {
+        return effects.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(NONE);
+    }
 
     public String getId() {
         return "oneshot.effects." + id;
@@ -45,7 +54,7 @@ public enum KillCosmetics implements KillCosmetic {
     @Override
     public void buy(OneShotPlayer gamePlayer) {
         gamePlayer.getUnlockedCosmetics().unlock(id);
-        gamePlayer.getPoints().remove(price);
+        gamePlayer.getPoints().remove((double) price);
     }
 
     @Override
@@ -59,7 +68,7 @@ public enum KillCosmetics implements KillCosmetic {
     }
 
     @Override
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

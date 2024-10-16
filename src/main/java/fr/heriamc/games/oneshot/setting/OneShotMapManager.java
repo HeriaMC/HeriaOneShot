@@ -31,7 +31,9 @@ public class OneShotMapManager extends GameMapManager<OneShotGame, SlimeMap, Sli
             var configuration = ConfigLoader.loadConfig("OneShot", slimeMap.getTemplateName(), OneShotGameConfiguration.class);
 
             game.getSettings().setBuildMaxY(configuration.getBuildYMax());
+            game.getLobby().setSpawnPoint(configuration.getSpawn().setWorld(slimeMap));
             slimeMap.setSpawn(configuration.getSpawn().setWorld(slimeMap));
+
             configuration.getRandom().getPoints().forEach(point -> point.setWorld(slimeMap));
 
             slimeMap.getWorld().setGameRuleValue("doFireTick", "false");

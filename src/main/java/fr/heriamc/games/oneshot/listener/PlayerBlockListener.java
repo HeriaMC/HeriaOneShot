@@ -1,10 +1,10 @@
 package fr.heriamc.games.oneshot.listener;
 
 import fr.heriamc.games.api.pool.GameManager;
+import fr.heriamc.games.engine.ffa.player.FFAGamePlayerState;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetic;
 import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetics;
-import fr.heriamc.games.oneshot.player.OneShotPlayerState;
 import fr.heriamc.games.oneshot.setting.PlacedBlockCache;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import org.bukkit.Material;
@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,7 @@ public class PlayerBlockListener implements Listener {
     public PlayerBlockListener(GameManager<OneShotGame> gameManager) {
         this.gameManager = gameManager;
         this.placedBlockCache = new PlacedBlockCache();
-        this.allowedBlock = Arrays.stream(BlockCosmetics.values()).map(BlockCosmetic::getMaterial).collect(Collectors.toSet());
+        this.allowedBlock = BlockCosmetics.blocks.stream().map(BlockCosmetic::getMaterial).collect(Collectors.toSet());
     }
 
     @EventHandler
@@ -43,7 +42,7 @@ public class PlayerBlockListener implements Listener {
 
         if (gamePlayer == null) return;
 
-        if (gamePlayer.getPlayerState() == OneShotPlayerState.IN_LOBBY) {
+        if (gamePlayer.getState() == FFAGamePlayerState.IN_LOBBY) {
             event.setCancelled(true);
             return;
         }
@@ -85,7 +84,7 @@ public class PlayerBlockListener implements Listener {
 
         if (gamePlayer == null) return;
 
-        if (gamePlayer.getPlayerState() == OneShotPlayerState.IN_LOBBY) {
+        if (gamePlayer.getState() == FFAGamePlayerState.IN_LOBBY) {
             event.setCancelled(true);
             return;
         }

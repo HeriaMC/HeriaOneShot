@@ -1,6 +1,7 @@
 package fr.heriamc.games.oneshot.lobby;
 
 import fr.heriamc.bukkit.utils.ItemBuilder;
+import fr.heriamc.games.engine.ffa.lobby.FFAGameLobbyItems;
 import fr.heriamc.games.engine.utils.func.TriConsumer;
 import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
@@ -10,19 +11,16 @@ import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Getter
 @AllArgsConstructor
-public enum OneShotLobbyItems {
+public enum OneShotLobbyItems implements FFAGameLobbyItems {
 
     PLAY (0,
             new ItemBuilder(Material.IRON_AXE).setName("§6Jouer§8・§7Clic droit").setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build(),
@@ -43,28 +41,10 @@ public enum OneShotLobbyItems {
     private final ItemStack itemStack;
     private final TriConsumer<OneShotAddon, OneShotGame, OneShotPlayer> consumer;
 
-    public static List<OneShotLobbyItems> getItems() {
-        return Arrays.asList(values());
-    }
-
-    public static Stream<OneShotLobbyItems> getItemsAsStream() {
-        return Arrays.stream(values());
-    }
-
-    public static void giveItems(Player player) {
-        getItems().forEach(lobbyItem -> lobbyItem.giveItem(player));
-    }
-
-    public static void giveItems(Collection<Player> collection) {
-        collection.forEach(OneShotLobbyItems::giveItems);
-    }
+    private static final List<OneShotLobbyItems> items = Arrays.asList(values());
 
     public static Optional<OneShotLobbyItems> getLobbyItem(ItemStack itemStack){
-        return getItemsAsStream().filter(lobbyItems -> lobbyItems.getItemStack().equals(itemStack)).findFirst();
-    }
-
-    public void giveItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItemStack());
+        return items.stream().filter(lobbyItems -> lobbyItems.getItemStack().equals(itemStack)).findFirst();
     }
 
 }

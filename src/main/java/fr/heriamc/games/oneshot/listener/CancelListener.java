@@ -44,7 +44,7 @@ public record CancelListener(OneShotAddon addon, GameManager<OneShotGame> gameMa
 
         if (gamePlayer == null) return;
 
-        switch (gamePlayer.getPlayerState()) {
+        switch (gamePlayer.getState()) {
             case IN_LOBBY -> {
                 var itemStack = event.getItem();
 
@@ -69,7 +69,7 @@ public record CancelListener(OneShotAddon addon, GameManager<OneShotGame> gameMa
 
         if (gamePlayer == null) return;
 
-        switch (gamePlayer.getPlayerState()) {
+        switch (gamePlayer.getState()) {
             case IN_LOBBY -> event.setCancelled(true);
             case IN_GAME -> event.setCancelled(false);
         }

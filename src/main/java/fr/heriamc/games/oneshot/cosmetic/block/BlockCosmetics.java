@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public enum BlockCosmetics implements BlockCosmetic {
@@ -22,9 +25,15 @@ public enum BlockCosmetics implements BlockCosmetic {
     private final String id, name;
     private final Material material;
 
-    private double price;
+    private int price;
     private HeriaRank requiredRank;
     private boolean purchasable;
+
+    public static final List<BlockCosmetics> blocks = Arrays.asList(values());
+
+    public static BlockCosmetic getFromId(String id) {
+        return blocks.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(CLAY);
+    }
 
     public String getId() {
         return "oneshot.blocks." + id;
@@ -50,7 +59,7 @@ public enum BlockCosmetics implements BlockCosmetic {
     @Override
     public void buy(OneShotPlayer gamePlayer) {
         gamePlayer.getUnlockedCosmetics().unlock(id);
-        gamePlayer.getPoints().remove(price);
+        gamePlayer.getPoints().remove((double) price);
     }
 
     @Override
@@ -64,7 +73,7 @@ public enum BlockCosmetics implements BlockCosmetic {
     }
 
     @Override
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

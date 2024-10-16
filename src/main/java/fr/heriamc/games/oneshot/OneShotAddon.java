@@ -23,11 +23,12 @@ public class OneShotAddon extends GameAddon<OneShotPool> {
     public void enable() {
         this.dataManager = new OneShotDataManager(heriaApi);
 
+        pool.setDataManager(dataManager);
         pool.loadDefaultGames();
 
         registerListener(
                 new CancelListener(this, pool.getGamesManager()),
-                new PlayerConnectionListener(dataManager),
+                new PlayerConnectionListener(heriaApi, dataManager),
                 new PlayerBlockListener(pool.getGamesManager()),
                 new PlayerDamageListener(pool.getGamesManager())
         );

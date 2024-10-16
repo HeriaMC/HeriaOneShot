@@ -29,7 +29,6 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
         super(game, gamePlayer, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
         this.beforeMenu = beforeMenu;
         this.currentFilter = Filter.ALL;
-        // () -> List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n")
     }
 
     protected void insertCategoryIcon(Inventory inventory, Material material, String displayName) {
@@ -49,17 +48,11 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
 
         lore.add(" ");
 
-        for (Filter filter : Filter.values())
+        for (Filter filter : Filter.filters)
             lore.add((filter == currentFilter ? "§e" : "§7") + "■ Statut: " + filter.getDisplayName());
 
         insertInteractItem(inventory, slot, new ItemBuilder(Material.HOPPER).setName("§7» §6Filtrer")
                 .setLoreWithList(lore)
-
-                /*.setLoreWithList(
-                        " ",
-                        " §7▲ Statut: " + nextFilter.getDisplayName(),
-                        " §e■ Statut: " + currentFilter.getDisplayName(),
-                        " §7▼ Statut: " + previousFilter.getDisplayName())*/
                 .onClick(event -> {
                     this.currentFilter = event.isLeftClick() ? nextFilter : previousFilter;
                     updateMenu();
@@ -81,12 +74,14 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
 
         private final String displayName;
 
+        private static final Filter[] filters = values();
+
         public Filter getPrevious() {
-            return values()[(ordinal() - 1  + values().length) % values().length];
+            return filters[(ordinal() - 1  + filters.length) % filters.length];
         }
 
         public Filter getNext() {
-            return values()[(ordinal() + 1) % values().length];
+            return filters[(ordinal() + 1) % filters.length];
         }
 
     }
