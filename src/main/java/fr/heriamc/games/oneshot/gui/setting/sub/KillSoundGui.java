@@ -20,7 +20,7 @@ public class KillSoundGui extends SubSettingGui<SoundCosmetics> {
     }
 
     @Override
-    public void inventory(Inventory inventory) {
+    public void setup(Inventory inventory) {
         setBorder(inventory, DyeColor.MAGENTA.getWoolData());
         insertCategoryIcon(inventory, Material.NOTE_BLOCK, "§7» §6Son de kill");
 

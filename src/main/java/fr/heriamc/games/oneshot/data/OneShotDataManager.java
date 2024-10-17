@@ -36,11 +36,11 @@ public class OneShotDataManager extends PersistentDataManager<UUID, OneShotPlaye
     }
 
     public HeriaUnlockable getUnlockable(UUID uuid) {
-        return heriaAPI.getUnlockableManager().createOrLoad(uuid);
+        return heriaAPI.getUnlockableManager().get(uuid);
     }
 
     public void unlockDefault(UUID uuid) {
-        var unlockable = heriaAPI.getUnlockableManager().createOrLoad(uuid);
+        var unlockable = heriaAPI.getUnlockableManager().get(uuid);
 
         if (!unlockable.getUnlockableData().containsKey(BlockCosmetics.CLAY.getId()))
             defaultCosmetics.values().forEach(unlockable::unlock);

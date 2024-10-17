@@ -23,7 +23,7 @@ public class BlockGui extends SubSettingGui<BlockCosmetics> {
     }
 
     @Override
-    public void inventory(Inventory inventory) {
+    public void setup(Inventory inventory) {
         setBorder(inventory, DyeColor.ORANGE.getWoolData());
         insertCategoryIcon(inventory, Material.STAINED_CLAY, "§7» §6Blocs");
 

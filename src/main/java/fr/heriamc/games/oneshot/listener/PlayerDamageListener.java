@@ -54,15 +54,13 @@ public class PlayerDamageListener implements Listener {
             if (event.getDamager() instanceof Player attacker) {
                 var weapon = attacker.getItemInHand();
 
-                if (weapon == null
-                        || !game.containsPlayer(attacker)
-                        || !weapon.getType().name().contains("_SWORD")) return;
+                if (weapon == null || !game.containsPlayer(attacker)) return;
 
-                if (weapon.getType().name().contains("_PICKAXE")) event.setDamage(1.0);
+                if (weapon.getType().name().contains("_PICKAXE"))
+                    event.setDamage(1.0);
 
-               //if (!weapon.getType().name().contains("_SWORD")) return;
-
-                event.setDamage(EntityDamageEvent.DamageModifier.BASE, (victim.getMaxHealth() / 3.0) + 0.1);
+               if (weapon.getType().name().contains("_SWORD"))
+                   event.setDamage(EntityDamageEvent.DamageModifier.BASE, (victim.getMaxHealth() / 3.0) + 0.1);
 
                 if (victim.getHealth() - event.getDamage() <= 0) {
                     handleDeath(game, gamePlayer.getLastAttacker(), gamePlayer);

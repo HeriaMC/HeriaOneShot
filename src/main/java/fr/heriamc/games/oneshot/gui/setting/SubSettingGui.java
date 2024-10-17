@@ -17,10 +17,13 @@ import org.bukkit.inventory.ItemFlag;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGamePageableGui<OneShotGame, OneShotPlayer, C> {
 
     private final HeriaMenu beforeMenu;
+    private final Class<C> enumClass;
+
     protected Filter currentFilter;
 
     private static final List<Integer> slots = Arrays.asList(20, 21, 22, 23, 24, 29, 30, 31, 32, 33);
@@ -28,7 +31,33 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
     public SubSettingGui(OneShotGame game, OneShotPlayer gamePlayer, Class<C> enumClass, String name, int size, boolean update, HeriaMenu beforeMenu) {
         super(game, gamePlayer, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
         this.beforeMenu = beforeMenu;
+        this.enumClass = enumClass;
         this.currentFilter = Filter.ALL;
+    }
+
+    public abstract void setup(Inventory inventory);
+
+    @Override
+    public void inventory(Inventory inventory) {
+        gamePlayer.getUnlockedCosmetics().getUnlockableData().forEach((serializable, aBoolean) -> System.out.println(serializable + ":" + aBoolean));
+
+        switch (currentFilter) {
+            case ALL -> updatePagination();
+            case OWNED -> updatePagination(cosmetic -> gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
+            case NOT_OWNED -> updatePagination(cosmetic -> !gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
+        }
+
+        setup(inventory);
+    }
+
+    private void updatePagination() {
+        getPagination().clear();
+        getPagination().addAll(Arrays.asList(enumClass.getEnumConstants()));
+    }
+
+    private void updatePagination(Predicate<C> predicate) {
+        getPagination().clear();
+        getPagination().addAll(Arrays.stream(enumClass.getEnumConstants()).filter(predicate).toList());
     }
 
     protected void insertCategoryIcon(Inventory inventory, Material material, String displayName) {

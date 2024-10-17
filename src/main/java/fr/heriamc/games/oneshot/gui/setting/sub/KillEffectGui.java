@@ -20,7 +20,7 @@ public class KillEffectGui extends SubSettingGui<KillCosmetics> {
     }
 
     @Override
-    public void inventory(Inventory inventory) {
+    public void setup(Inventory inventory) {
         setBorder(inventory, DyeColor.CYAN.getWoolData());
         insertCategoryIcon(inventory, Material.FIREWORK, "§7» §6Effet de kill");
 

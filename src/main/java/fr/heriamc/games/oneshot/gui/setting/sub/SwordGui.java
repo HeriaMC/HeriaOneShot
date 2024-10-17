@@ -19,11 +19,11 @@ import java.util.List;
 public class SwordGui extends SubSettingGui<SwordCosmetics> {
 
     public SwordGui(OneShotGame game, OneShotPlayer gamePlayer, HeriaMenu beforeMenu) {
-        super(game, gamePlayer, SwordCosmetics.class, "Épée", 54, false, beforeMenu);
+        super(game, gamePlayer, SwordCosmetics.class,"Épée", 54, false, beforeMenu);
     }
 
     @Override
-    public void inventory(Inventory inventory) {
+    public void setup(Inventory inventory) {
         setBorder(inventory, DyeColor.SILVER.getWoolData());
         insertCategoryIcon(inventory, Material.DIAMOND_SWORD, "§7» §6Épée");
 
