@@ -16,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public enum SoundCosmetics implements SoundCosmetic {
 
-    NONE ("none", "Aucun", null, Material.BARRIER, 0, HeriaRank.PLAYER, false),
-    EXPLOSION ("", "§4Son explosif", Sound.EXPLODE, Material.TNT, 1000, HeriaRank.PLAYER, true);
+    NONE ("oneshot.sounds.none", "Aucun", null, Material.BARRIER, 0, HeriaRank.PLAYER, false),
+    EXPLOSION ("oneshot.sounds.explosion", "§4Son explosif", Sound.EXPLODE, Material.TNT, 1000, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Sound sound;
@@ -32,10 +32,6 @@ public enum SoundCosmetics implements SoundCosmetic {
 
     public static SoundCosmetic getFromId(String id) {
         return sounds.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(NONE);
-    }
-
-    public String getId() {
-        return "oneshot.sounds." + id;
     }
 
     @Override

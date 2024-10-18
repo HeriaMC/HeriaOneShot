@@ -4,25 +4,35 @@ import fr.heriamc.games.api.pool.GameManager;
 import fr.heriamc.games.engine.ffa.player.FFAGamePlayerState;
 import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.OneShotGame;
+import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetic;
+import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotKillStreakMessage;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlayerDamageListener implements Listener {
 
     private final GameManager<OneShotGame> gameManager;
+
+    private final Set<Material> swords;
     private final EnumSet<EntityDamageEvent.DamageCause> damageCauses;
 
     public PlayerDamageListener(GameManager<OneShotGame> gameManager) {
         this.gameManager = gameManager;
+        this.swords = Arrays.stream(SwordCosmetics.values()).map(SwordCosmetic::getSword).collect(Collectors.toSet());
         this.damageCauses = EnumSet.of(
                 EntityDamageEvent.DamageCause.VOID,
                 EntityDamageEvent.DamageCause.FALL,
@@ -56,11 +66,10 @@ public class PlayerDamageListener implements Listener {
 
                 if (weapon == null || !game.containsPlayer(attacker)) return;
 
-                if (weapon.getType().name().contains("_PICKAXE"))
-                    event.setDamage(1.0);
+                event.setDamage(1.0);
 
-               if (weapon.getType().name().contains("_SWORD"))
-                   event.setDamage(EntityDamageEvent.DamageModifier.BASE, (victim.getMaxHealth() / 3.0) + 0.1);
+                if (swords.contains(weapon.getType()))
+                    event.setDamage(EntityDamageEvent.DamageModifier.BASE, (victim.getMaxHealth() / 3.0) + 0.1);
 
                 if (victim.getHealth() - event.getDamage() <= 0) {
                     handleDeath(game, gamePlayer.getLastAttacker(), gamePlayer);
@@ -114,10 +123,9 @@ public class PlayerDamageListener implements Listener {
                 return;
             }
 
-            System.out.println("hm #3");
+            if (!event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)
+                    && player.getHealth() - event.getDamage() <= 0) {
 
-            if (!event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE) && player.getHealth() - event.getDamage() <= 0) {
-                System.out.println("hm ! #1");
                 event.setCancelled(true);
                 handleDeath(game, gamePlayer.getLastAttacker(), gamePlayer);
             }

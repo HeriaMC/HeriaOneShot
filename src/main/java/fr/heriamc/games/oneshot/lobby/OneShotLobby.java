@@ -5,6 +5,7 @@ import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
+import fr.heriamc.games.oneshot.utils.NameTag;
 import org.bukkit.GameMode;
 
 public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneShotLobbyItems> {
@@ -15,7 +16,11 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
 
     @Override
     protected void processJoin(OneShotGame game, OneShotPlayer gamePlayer) {
+        var rank = gamePlayer.getHeriaPlayer().getRank();
         gamePlayer.setGameMode(GameMode.ADVENTURE);
+
+        NameTag.setNameTag(gamePlayer.getPlayer(), rank.getPrefix(), " ", rank.getTabPriority());
+
         sendWelcomeTitle(gamePlayer);
     }
 

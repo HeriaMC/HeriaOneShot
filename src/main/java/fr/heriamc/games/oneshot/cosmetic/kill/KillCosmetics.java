@@ -14,8 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public enum KillCosmetics implements KillCosmetic {
 
-    NONE ("none", "Aucun", Material.BARRIER, 0, HeriaRank.PLAYER, false),
-    FIRE_WORK ("firework", "§6Feu d'artifice", Material.FIREWORK, 1000, HeriaRank.PLAYER, true);
+    NONE ("oneshot.effects.none", "Aucun", Material.BARRIER, 0, HeriaRank.PLAYER, false),
+    FIRE_WORK ("oneshot.effects.firework", "§6Feu d'artifice", Material.FIREWORK, 1000, HeriaRank.PLAYER, true);
 
     private final String id, name;
 
@@ -29,10 +29,6 @@ public enum KillCosmetics implements KillCosmetic {
 
     public static KillCosmetic getFromId(String id) {
         return effects.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(NONE);
-    }
-
-    public String getId() {
-        return "oneshot.effects." + id;
     }
 
     @Override

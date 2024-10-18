@@ -14,16 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 public enum SwordCosmetics implements SwordCosmetic {
 
-    WOOD ("wood", "§6Épée en bois", Material.WOOD_SWORD, 0, HeriaRank.PLAYER, false),
-    STONE ("stone", "§8Épée en pierre", Material.STONE_SWORD, 100, HeriaRank.PLAYER, true),
-    IRON ("iron", "§7Épée en fer", Material.IRON_SWORD, 100, HeriaRank.PLAYER, true),
-    GOLD ("gold", "§eÉpée en or", Material.GOLD_SWORD, 100, HeriaRank.PLAYER, true),
-    DIAMOND ("diamond", "§bÉpée en diamant", Material.DIAMOND_SWORD, 100, HeriaRank.PLAYER, true),
+    WOOD ("oneshot.swords.wood", "§6Épée en bois", Material.WOOD_SWORD, 0, HeriaRank.PLAYER, false),
+    STONE ("oneshot.swords.stone", "§8Épée en pierre", Material.STONE_SWORD, 100, HeriaRank.PLAYER, true),
+    IRON ("oneshot.swords.iron", "§7Épée en fer", Material.IRON_SWORD, 100, HeriaRank.PLAYER, true),
+    GOLD ("oneshot.swords.gold", "§eÉpée en or", Material.GOLD_SWORD, 100, HeriaRank.PLAYER, true),
+    DIAMOND ("oneshot.swords.diamond", "§bÉpée en diamant", Material.DIAMOND_SWORD, 100, HeriaRank.PLAYER, true),
 
     // ADD DESCRIPTION
-    WAR_AXE ("waraxe", "§cHache de guerre", Material.DIAMOND_AXE, 999, HeriaRank.PLAYER, true),
-    BONK ("bonk", "§dBONK", Material.STICK, 9999, HeriaRank.PLAYER, true),
-    BONE ("bone", "§fOs", Material.BONE, 9999, HeriaRank.PLAYER, true);
+    WAR_AXE ("oneshot.swords.waraxe", "§cHache de guerre", Material.DIAMOND_AXE, 999, HeriaRank.PLAYER, true),
+    BONK ("oneshot.swords.bonk", "§dBONK", Material.STICK, 9999, HeriaRank.PLAYER, true),
+    BONE ("oneshot.swords.bone", "§fOs", Material.BONE, 9999, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Material sword;
@@ -36,10 +36,6 @@ public enum SwordCosmetics implements SwordCosmetic {
 
     public static SwordCosmetic getFromId(String id) {
         return swords.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(WOOD);
-    }
-
-    public String getId() {
-        return "oneshot.swords." + id;
     }
 
     @Override

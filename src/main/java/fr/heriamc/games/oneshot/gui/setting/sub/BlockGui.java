@@ -5,6 +5,7 @@ import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
 import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetics;
+import fr.heriamc.games.oneshot.gui.setting.ConfirmPurchaseGui;
 import fr.heriamc.games.oneshot.gui.setting.SubSettingGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.DyeColor;
@@ -38,18 +39,25 @@ public class BlockGui extends SubSettingGui<BlockCosmetics> {
         if (gamePlayer.hasSelected(CosmeticType.BLOCK, cosmetic))
             icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
 
-        return icon.setName(cosmetic.getName())
+        return icon.setName(gamePlayer.hasSelected(CosmeticType.BLOCK, cosmetic) ? cosmetic.getName() + " §a[Sélectionner]" : cosmetic.getName())
                 .setLoreWithList(
                         " ",
                         gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()) ?
-                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice(),
+                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",
                         " ",
                         gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
                                 ? "§6§l❱ §eClique pour équiper"
                                 : "§6§l❱ §eClique pour acheter"
                 )
                 .onClick(event -> {
-                    // TODO: open confirm buy gui
+                    if (cosmetic.has(gamePlayer) && !gamePlayer.hasSelected(CosmeticType.BLOCK, cosmetic)) {
+                        cosmetic.select(gamePlayer);
+                        updateMenu();
+                        return;
+                    }
+
+                    if (!cosmetic.has(gamePlayer) && cosmetic.canBuy(gamePlayer))
+                        openGui(new ConfirmPurchaseGui(gamePlayer, this, cosmetic));
                 });
     }
 

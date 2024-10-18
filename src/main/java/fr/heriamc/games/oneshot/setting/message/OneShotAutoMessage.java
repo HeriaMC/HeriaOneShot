@@ -13,8 +13,10 @@ public enum OneShotAutoMessage {
 
     private final String message;
 
+    private static final OneShotAutoMessage[] messages = values();
+
     public OneShotAutoMessage nextMessage() {
-        return OneShotAutoMessage.values()[(this.ordinal() + 1) % OneShotAutoMessage.values().length];
+        return messages[(ordinal() + 1) % messages.length];
     }
 
 }

@@ -15,6 +15,9 @@ public enum OneShotMessages {
 
     MAX_BUILD_HEIGHT_REACHED ("§cLa hauteur maximale a été dépassée."),
 
+    SHOP_SUCCESSFUL_PURCHASE ("§aVous avez acheter %s §a!"),
+    SHOP_FAIL_PURCHASE ("§c"),
+
     UNAVAILABLE_FUNCTIONALITY ("§cCette fonctionnalité n'est pas encore disponible.");
 
     private String message;

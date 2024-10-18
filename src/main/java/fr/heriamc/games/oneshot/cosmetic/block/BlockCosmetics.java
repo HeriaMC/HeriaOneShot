@@ -14,13 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 public enum BlockCosmetics implements BlockCosmetic {
 
-    CLAY ("clay", "§7Bloc d'argile", Material.STAINED_CLAY, 0, HeriaRank.PLAYER, false),
+    CLAY ("oneshot.blocks.clay", "§7Bloc d'argile", Material.STAINED_CLAY, 0, HeriaRank.PLAYER, false),
 
-    BRICK ("brick", "§cBloc de brique", Material.BRICK, 1000, HeriaRank.PLAYER, true),
+    BRICK ("oneshot.blocks.brick", "§cBloc de brique", Material.BRICK, 1000, HeriaRank.PLAYER, true),
 
-    GOLD ("gold", "§eBloc d'or", Material.GOLD_BLOCK, 1000, HeriaRank.PLAYER, true),
-    EMERALD ("emerald", "§aBloc d'émeraude", Material.EMERALD_BLOCK, 1000, HeriaRank.PLAYER, true),
-    DIAMOND ("diamond", "§bBloc de diamant", Material.DIAMOND_BLOCK, 1000, HeriaRank.PLAYER, true);
+    GOLD ("oneshot.blocks.gold", "§eBloc d'or", Material.GOLD_BLOCK, 1000, HeriaRank.PLAYER, true),
+    EMERALD ("oneshot.blocks.emerald", "§aBloc d'émeraude", Material.EMERALD_BLOCK, 1000, HeriaRank.PLAYER, true),
+    DIAMOND ("oneshot.blocks.diamond", "§bBloc de diamant", Material.DIAMOND_BLOCK, 1000, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Material material;
@@ -33,10 +33,6 @@ public enum BlockCosmetics implements BlockCosmetic {
 
     public static BlockCosmetic getFromId(String id) {
         return blocks.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(CLAY);
-    }
-
-    public String getId() {
-        return "oneshot.blocks." + id;
     }
 
     @Override
@@ -64,7 +60,7 @@ public enum BlockCosmetics implements BlockCosmetic {
 
     @Override
     public boolean has(OneShotPlayer gamePlayer) {
-        return gamePlayer.getUnlockedCosmetics().isUnlocked(id);
+        return gamePlayer.getUnlockedCosmetics().getUnlockableData().getOrDefault(id, false);
     }
 
     @Override

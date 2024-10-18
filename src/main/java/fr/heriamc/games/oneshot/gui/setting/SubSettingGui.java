@@ -21,12 +21,12 @@ import java.util.function.Predicate;
 
 public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGamePageableGui<OneShotGame, OneShotPlayer, C> {
 
+    private static final List<Integer> slots = Arrays.asList(20, 21, 22, 23, 24, 29, 30, 31, 32, 33);
+
     private final HeriaMenu beforeMenu;
     private final Class<C> enumClass;
 
     protected Filter currentFilter;
-
-    private static final List<Integer> slots = Arrays.asList(20, 21, 22, 23, 24, 29, 30, 31, 32, 33);
 
     public SubSettingGui(OneShotGame game, OneShotPlayer gamePlayer, Class<C> enumClass, String name, int size, boolean update, HeriaMenu beforeMenu) {
         super(game, gamePlayer, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
@@ -39,8 +39,6 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
 
     @Override
     public void inventory(Inventory inventory) {
-        gamePlayer.getUnlockedCosmetics().getUnlockableData().forEach((serializable, aBoolean) -> System.out.println(serializable + ":" + aBoolean));
-
         switch (currentFilter) {
             case ALL -> updatePagination();
             case OWNED -> updatePagination(cosmetic -> gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
@@ -86,6 +84,10 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
                     this.currentFilter = event.isLeftClick() ? nextFilter : previousFilter;
                     updateMenu();
                 }));
+    }
+
+    protected void openGui(HeriaMenu heriaMenu) {
+        HeriaBukkit.get().getMenuManager().open(heriaMenu);
     }
 
     protected void closeOrOpenBefore(InventoryClickEvent event) {
