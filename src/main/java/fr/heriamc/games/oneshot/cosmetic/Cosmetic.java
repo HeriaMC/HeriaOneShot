@@ -25,6 +25,9 @@ public interface Cosmetic {
     void buy(OneShotPlayer gamePlayer);
 
     boolean has(OneShotPlayer gamePlayer);
+    boolean isSelected(OneShotPlayer gamePlayer);
+
+    boolean canSelect(OneShotPlayer gamePlayer);
     boolean canBuy(OneShotPlayer gamePlayer);
 
 }

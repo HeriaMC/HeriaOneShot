@@ -59,6 +59,16 @@ public enum KillCosmetics implements KillCosmetic {
     }
 
     @Override
+    public boolean isSelected(OneShotPlayer gamePlayer) {
+        return gamePlayer.hasSelected(CosmeticType.KILL_EFFECT, this);
+    }
+
+    @Override
+    public boolean canSelect(OneShotPlayer gamePlayer) {
+        return has(gamePlayer) && !isSelected(gamePlayer);
+    }
+
+    @Override
     public boolean canBuy(OneShotPlayer gamePlayer) {
         return gamePlayer.getPoints().getWallet() >= price;
     }

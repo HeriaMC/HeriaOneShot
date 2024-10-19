@@ -10,6 +10,8 @@ import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -46,6 +48,37 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
         }
 
         setup(inventory);
+    }
+
+    @Override
+    protected ItemBuilder item(C cosmetic, int i, int i1) {
+        var icon = new ItemBuilder(cosmetic.getIcon());
+
+        if (cosmetic.isSelected(gamePlayer))
+            icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
+
+        return icon.setName(cosmetic.isSelected(gamePlayer) ? cosmetic.getName() + " §a[Sélectionner]" : cosmetic.getName())
+                .setLoreWithList(
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()) ?
+                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",
+                        " ",
+                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
+                                ? "§6§l❱ §eClique pour équiper"
+                                : "§6§l❱ §eClique pour acheter"
+                )
+                .flag(ItemFlag.HIDE_ATTRIBUTES)
+                .onClick(event -> {
+                    if (cosmetic.canSelect(gamePlayer)) {
+                        cosmetic.select(gamePlayer);
+                        gamePlayer.playSound(Sound.CLICK, 10f, 10f);
+                        updateMenu();
+                        return;
+                    }
+
+                    if (!cosmetic.has(gamePlayer) && cosmetic.canBuy(gamePlayer))
+                        openGui(new ConfirmPurchaseGui(gamePlayer, this, cosmetic));
+                });
     }
 
     private void updatePagination() {
