@@ -39,7 +39,7 @@ public class ConfirmPurchaseGui extends ConfirmMenu {
                         " ",
                         "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",
                         " ",
-                        "§8» §7Solde actuelle: §6 " + gamePlayer.getPoints().getWalletFormated(),
+                        "§8» §7Solde actuel: §6 " + gamePlayer.getPoints().getWalletFormated(),
                         "§8» §7Nouveau Solde: §6" + (int) (gamePlayer.getPoints().getWallet() - cosmetic.getPrice()) + " ⛃",
                         " ",
                         "§6§l❱ §eConfirmer votre achat")
