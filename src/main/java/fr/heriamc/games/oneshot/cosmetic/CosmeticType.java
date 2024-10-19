@@ -7,7 +7,7 @@ import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 @Getter
 @AllArgsConstructor
@@ -22,10 +22,31 @@ public enum CosmeticType {
     private final String id;
 
     public static final CosmeticType[] types = values();
-    private static final Stream<CosmeticType> typeStream = Stream.of(values());
+
+    public static CosmeticType fromName(String name) {
+        return Arrays.stream(types).filter(type -> type.name().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
 
     public static CosmeticType fromId(String id) {
-        return typeStream.filter(type -> type.getId().equals(id)).findAny().orElse(null);
+        return Arrays.stream(types).filter(type -> type.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public static Cosmetic getCosmetic(CosmeticType type, String id) {
+        return switch (type) {
+            case BLOCK -> BlockCosmetics.getFromIdNullable(id);
+            case KILL_EFFECT -> KillCosmetics.getFromIdNullable(id);
+            case SOUND_EFFECT -> SoundCosmetics.getFromIdNullable(id);
+            case SWORD -> SwordCosmetics.getFromIdNullable(id);
+        };
+    }
+
+    public static Cosmetic getCosmetic(String type, String id) {
+        return switch (fromName(type)) {
+            case BLOCK -> BlockCosmetics.getFromIdNullable(id);
+            case KILL_EFFECT -> KillCosmetics.getFromIdNullable(id);
+            case SOUND_EFFECT -> SoundCosmetics.getFromIdNullable(id);
+            case SWORD -> SwordCosmetics.getFromIdNullable(id);
+        };
     }
 
 }

@@ -35,12 +35,21 @@ public enum SwordCosmetics implements SwordCosmetic {
     public static final List<SwordCosmetics> swords = Arrays.asList(values());
 
     public static SwordCosmetic getFromId(String id) {
-        return swords.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(WOOD);
+        return swords.stream().filter(sword -> sword.getId().equals(id)).findFirst().orElse(WOOD);
+    }
+
+    public static SwordCosmetic getFromIdNullable(String id) {
+        return swords.stream().filter(sword -> sword.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
     public Material getIcon() {
         return sword;
+    }
+
+    @Override
+    public CosmeticType getType() {
+        return CosmeticType.SWORD;
     }
 
     @Override
@@ -78,7 +87,7 @@ public enum SwordCosmetics implements SwordCosmetic {
 
     @Override
     public boolean canBuy(OneShotPlayer gamePlayer) {
-        return gamePlayer.getPoints().getWallet() >= price;
+        return purchasable && gamePlayer.getPoints().getWallet() >= price;
     }
 
     @Override

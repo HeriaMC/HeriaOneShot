@@ -1,15 +1,15 @@
-package fr.heriamc.games.oneshot.gui.setting.sub;
+package fr.heriamc.games.oneshot.gui.cosmetic.sub;
 
 import fr.heriamc.bukkit.menu.HeriaMenu;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
-import fr.heriamc.games.oneshot.gui.setting.SubSettingGui;
+import fr.heriamc.games.oneshot.gui.cosmetic.SubCosmeticGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
-public class SwordGui extends SubSettingGui<SwordCosmetics> {
+public class SwordGui extends SubCosmeticGui<SwordCosmetics> {
 
     public SwordGui(OneShotGame game, OneShotPlayer gamePlayer, HeriaMenu beforeMenu) {
         super(game, gamePlayer, SwordCosmetics.class,"Épée", 54, false, beforeMenu);

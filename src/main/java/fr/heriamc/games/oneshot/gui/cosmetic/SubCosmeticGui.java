@@ -1,4 +1,4 @@
-package fr.heriamc.games.oneshot.gui.setting;
+package fr.heriamc.games.oneshot.gui.cosmetic;
 
 import fr.heriamc.bukkit.HeriaBukkit;
 import fr.heriamc.bukkit.menu.HeriaMenu;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGamePageableGui<OneShotGame, OneShotPlayer, C> {
+public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseGamePageableGui<OneShotGame, OneShotPlayer, C> {
 
     private static final List<Integer> slots = Arrays.asList(20, 21, 22, 23, 24, 29, 30, 31, 32, 33);
 
@@ -30,7 +30,7 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
 
     protected Filter currentFilter;
 
-    public SubSettingGui(OneShotGame game, OneShotPlayer gamePlayer, Class<C> enumClass, String name, int size, boolean update, HeriaMenu beforeMenu) {
+    public SubCosmeticGui(OneShotGame game, OneShotPlayer gamePlayer, Class<C> enumClass, String name, int size, boolean update, HeriaMenu beforeMenu) {
         super(game, gamePlayer, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
         this.beforeMenu = beforeMenu;
         this.enumClass = enumClass;
@@ -115,6 +115,7 @@ public abstract class SubSettingGui<C extends Enum<C> & Cosmetic> extends BaseGa
                 .setLoreWithList(lore)
                 .onClick(event -> {
                     this.currentFilter = event.isLeftClick() ? nextFilter : previousFilter;
+                    gamePlayer.playSound(Sound.NOTE_PLING, 10f, 10f);
                     updateMenu();
                 }));
     }

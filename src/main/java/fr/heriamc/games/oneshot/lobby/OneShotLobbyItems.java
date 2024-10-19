@@ -5,6 +5,7 @@ import fr.heriamc.games.engine.ffa.lobby.FFAGameLobbyItems;
 import fr.heriamc.games.engine.utils.func.TriConsumer;
 import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
+import fr.heriamc.games.oneshot.gui.cosmetic.CosmeticGui;
 import fr.heriamc.games.oneshot.gui.setting.SettingGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
@@ -26,13 +27,17 @@ public enum OneShotLobbyItems implements FFAGameLobbyItems {
             new ItemBuilder(Material.IRON_AXE).setName("§6Jouer§8・§7Clic droit").setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build(),
             (addon, game, gamePlayer) -> game.play(gamePlayer)),
 
-    SPECTATE (1,
+    COSMETICS (1,
+            new ItemBuilder(Material.CHEST).setName("§eCosmétiques§8・§7Clic droit").build(),
+            (addon, game, gamePlayer) -> addon.openGui(new CosmeticGui(addon, game, gamePlayer))),
+
+    SPECTATE (2,
             new ItemBuilder(Material.FEATHER).setName("§fSpectateur§8・§7Clic droit").build(),
             (addon, game, gamePlayer) -> gamePlayer.sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage())),
 
     SETTINGS (7,
             new ItemBuilder(Material.REDSTONE_COMPARATOR).setName("§cParamètres§8・§7Clic droit").build(),
-            (addon, game, gamePlayer) -> addon.openGui(new SettingGui(addon, game, gamePlayer))),
+            (addon, game, gamePlayer) -> addon.openGui(new SettingGui(game, gamePlayer))),
 
     LEAVE (8, new ItemBuilder(Material.BARRIER).setName("§cQuitter§8・§7Clic droit").build(),
             (addon, game, gamePlayer) -> addon.redirectToHub(gamePlayer));

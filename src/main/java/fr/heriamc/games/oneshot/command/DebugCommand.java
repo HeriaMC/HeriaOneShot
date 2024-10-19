@@ -1,9 +1,15 @@
 package fr.heriamc.games.oneshot.command;
 
+import fr.heriamc.api.user.rank.HeriaRank;
 import fr.heriamc.bukkit.command.CommandArgs;
 import fr.heriamc.bukkit.command.HeriaCommand;
 import fr.heriamc.games.api.pool.GameManager;
 import fr.heriamc.games.oneshot.OneShotGame;
+import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
+import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public record DebugCommand(GameManager<OneShotGame> gameManager) {
 
@@ -11,7 +17,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         COINS
      */
 
-    @HeriaCommand(name = "setCoins")
+    @HeriaCommand(name = "setCoins", power = HeriaRank.DEV)
     public void setCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
@@ -32,7 +38,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         player.sendMessage("[OneShot] you set your coins to " + arg);
     }
 
-    @HeriaCommand(name = "addCoins")
+    @HeriaCommand(name = "addCoins", power = HeriaRank.DEV)
     public void addCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
@@ -54,7 +60,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         player.sendMessage("[OneShot] you now have " + gamePlayer.getPoints().getWalletFormated());
     }
 
-    @HeriaCommand(name = "removeCoins")
+    @HeriaCommand(name = "removeCoins", power = HeriaRank.DEV)
     public void removeCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
@@ -80,8 +86,8 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         COSMETICS
      */
 
-    @HeriaCommand(name = "showCosmetics", inGameOnly = true)
-    public void showCosmetics(CommandArgs commandArgs) {
+    @HeriaCommand(name = "select", inGameOnly = true)
+    public void selectCosmetic(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
 
@@ -90,6 +96,34 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         var gamePlayer = game.getNullablePlayer(player);
 
         if (gamePlayer == null) return;
+
+        var args = commandArgs.getArgs();
+
+        if (args.length != 2) return;
+
+        var typeArg = args[0];
+        var idArg = args[1];
+
+        if (typeArg == null || typeArg.isEmpty() || idArg == null || idArg.isEmpty()) return;
+
+        var type = CosmeticType.fromName(typeArg);
+
+        if (type == null) {
+            player.sendMessage("Type incorrect (" + Arrays.stream(CosmeticType.types).map(Enum::name).collect(Collectors.joining(", ")));
+            return;
+        }
+
+        var cosmetic = CosmeticType.getCosmetic(type, idArg);
+
+        if (cosmetic == null) {
+            player.sendMessage("Cosmetic incorrect");
+            return;
+        }
+
+        if (cosmetic.canSelect(gamePlayer)) {
+            cosmetic.select(gamePlayer);
+            player.sendMessage(OneShotMessages.SHOP_SELECT_COSMETIC.getMessage(cosmetic.getName()));
+        }
     }
 
 }

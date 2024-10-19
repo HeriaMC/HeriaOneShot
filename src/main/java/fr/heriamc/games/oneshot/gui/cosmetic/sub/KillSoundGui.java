@@ -1,15 +1,15 @@
-package fr.heriamc.games.oneshot.gui.setting.sub;
+package fr.heriamc.games.oneshot.gui.cosmetic.sub;
 
 import fr.heriamc.bukkit.menu.HeriaMenu;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.cosmetic.sound.SoundCosmetics;
-import fr.heriamc.games.oneshot.gui.setting.SubSettingGui;
+import fr.heriamc.games.oneshot.gui.cosmetic.SubCosmeticGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
-public class KillSoundGui extends SubSettingGui<SoundCosmetics> {
+public class KillSoundGui extends SubCosmeticGui<SoundCosmetics> {
 
     public KillSoundGui(OneShotGame game, OneShotPlayer gamePlayer, HeriaMenu beforeMenu) {
         super(game, gamePlayer, SoundCosmetics.class, "Son de kill", 54, false, beforeMenu);

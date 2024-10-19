@@ -47,8 +47,8 @@ public class PlayerBlockListener implements Listener {
             return;
         }
 
-        if (player.getInventory().getItemInHand().getType() == Material.STAINED_CLAY
-                || allowedBlock.contains(block.getType())) {
+        if (allowedBlock.contains(player.getInventory().getItemInHand().getType())
+                && allowedBlock.contains(block.getType())) {
 
             // USELESS ?
             event.setCancelled(false);

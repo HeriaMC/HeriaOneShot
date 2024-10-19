@@ -28,13 +28,22 @@ public enum KillCosmetics implements KillCosmetic {
     public static final List<KillCosmetics> effects = Arrays.asList(values());
 
     public static KillCosmetic getFromId(String id) {
-        return effects.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(NONE);
+        return effects.stream().filter(effect -> effect.getId().equals(id)).findFirst().orElse(NONE);
+    }
+
+    public static KillCosmetic getFromIdNullable(String id) {
+        return effects.stream().filter(sound -> sound.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
     public void play(OneShotPlayer gamePlayer) {
         // TODO: run task
         // task.run();
+    }
+
+    @Override
+    public CosmeticType getType() {
+        return CosmeticType.KILL_EFFECT;
     }
 
     @Override
@@ -70,7 +79,7 @@ public enum KillCosmetics implements KillCosmetic {
 
     @Override
     public boolean canBuy(OneShotPlayer gamePlayer) {
-        return gamePlayer.getPoints().getWallet() >= price;
+        return purchasable && gamePlayer.getPoints().getWallet() >= price;
     }
 
     @Override

@@ -31,12 +31,21 @@ public enum SoundCosmetics implements SoundCosmetic {
     public static final List<SoundCosmetics> sounds = Arrays.asList(values());
 
     public static SoundCosmetic getFromId(String id) {
-        return sounds.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(NONE);
+        return sounds.stream().filter(sound -> sound.getId().equals(id)).findFirst().orElse(NONE);
+    }
+
+    public static SoundCosmetic getFromIdNullable(String id) {
+        return sounds.stream().filter(sound -> sound.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
     public void play(Collection<OneShotPlayer> collection) {
 
+    }
+
+    @Override
+    public CosmeticType getType() {
+        return CosmeticType.SOUND_EFFECT;
     }
 
     @Override
@@ -72,7 +81,7 @@ public enum SoundCosmetics implements SoundCosmetic {
 
     @Override
     public boolean canBuy(OneShotPlayer gamePlayer) {
-        return gamePlayer.getPoints().getWallet() >= price;
+        return purchasable && gamePlayer.getPoints().getWallet() >= price;
     }
 
     @Override

@@ -20,7 +20,6 @@ public record PlayerConnectionListener(HeriaAPI heriaAPI, OneShotDataManager dat
 
     private void savePlayerData(OneShotPlayer gamePlayer) {
         VirtualThreading.execute(() -> {
-            System.out.println("hello from" + Thread.currentThread().getName());
             var gamePlayerData = dataManager.createOrLoad(gamePlayer.getUuid());
 
             gamePlayerData.updateStats(gamePlayer);

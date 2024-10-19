@@ -15,6 +15,7 @@ public enum OneShotMessages {
 
     MAX_BUILD_HEIGHT_REACHED ("§cLa hauteur maximale a été dépassée."),
 
+    SHOP_SELECT_COSMETIC ("§aVous avez équiper %s §a!"),
     SHOP_SUCCESSFUL_PURCHASE ("§aVous avez acheter %s §a!"),
     SHOP_FAIL_PURCHASE ("§c"),
 

@@ -17,7 +17,10 @@ public enum BlockCosmetics implements BlockCosmetic {
     CLAY ("oneshot.blocks.clay", "§7Bloc d'argile", Material.STAINED_CLAY, 0, HeriaRank.PLAYER, false),
 
     BRICK ("oneshot.blocks.brick", "§cBloc de brique", Material.BRICK, 1000, HeriaRank.PLAYER, true),
+    ICE ("oneshot.blocks.ice", "§9Bloc de glace", Material.PACKED_ICE, 100, HeriaRank.PLAYER, true),
+    SANDSTONE ("oneshot.blocks.sandstone", "§eBloc de sandstone", Material.SANDSTONE, 100, HeriaRank.PLAYER, true),
 
+    IRON ("oneshot.blocks.iron", "§fBloc de fer", Material.IRON_BLOCK, 1000, HeriaRank.PLAYER, true),
     GOLD ("oneshot.blocks.gold", "§eBloc d'or", Material.GOLD_BLOCK, 1000, HeriaRank.PLAYER, true),
     EMERALD ("oneshot.blocks.emerald", "§aBloc d'émeraude", Material.EMERALD_BLOCK, 1000, HeriaRank.PLAYER, true),
     DIAMOND ("oneshot.blocks.diamond", "§bBloc de diamant", Material.DIAMOND_BLOCK, 1000, HeriaRank.PLAYER, true);
@@ -35,9 +38,18 @@ public enum BlockCosmetics implements BlockCosmetic {
         return blocks.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(CLAY);
     }
 
+    public static BlockCosmetic getFromIdNullable(String id) {
+        return blocks.stream().filter(block -> block.getId().equals(id)).findFirst().orElse(null);
+    }
+
     @Override
     public Material getIcon() {
         return material;
+    }
+
+    @Override
+    public CosmeticType getType() {
+        return CosmeticType.BLOCK;
     }
 
     @Override
@@ -75,7 +87,7 @@ public enum BlockCosmetics implements BlockCosmetic {
 
     @Override
     public boolean canBuy(OneShotPlayer gamePlayer) {
-        return gamePlayer.getPoints().getWallet() >= price;
+        return purchasable && gamePlayer.getPoints().getWallet() >= price;
     }
 
     @Override

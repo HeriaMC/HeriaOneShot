@@ -13,6 +13,8 @@ public interface Cosmetic {
     int getPrice();
     HeriaRank getRequiredRank();
 
+    CosmeticType getType();
+
     boolean isPurchasable();
 
     void select(OneShotPlayer gamePlayer);

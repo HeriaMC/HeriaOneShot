@@ -1,27 +1,17 @@
 package fr.heriamc.games.oneshot.gui.setting;
 
-import fr.heriamc.bukkit.menu.HeriaMenuManager;
 import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.engine.utils.gui.BaseGameGui;
-import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
-import fr.heriamc.games.oneshot.gui.setting.sub.BlockGui;
-import fr.heriamc.games.oneshot.gui.setting.sub.KillEffectGui;
-import fr.heriamc.games.oneshot.gui.setting.sub.KillSoundGui;
-import fr.heriamc.games.oneshot.gui.setting.sub.SwordGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
-    private final HeriaMenuManager menuManager;
-
-    public SettingGui(OneShotAddon addon, OneShotGame game, OneShotPlayer gamePlayer) {
+    public SettingGui(OneShotGame game, OneShotPlayer gamePlayer) {
         super(game, gamePlayer, "Paramètres", 54, false);
-        this.menuManager = addon.getHeriaBukkit().getMenuManager();
     }
 
     @Override
@@ -30,20 +20,10 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
         inventory.setItem(4, new ItemBuilder(Material.REDSTONE_COMPARATOR).setName("§cParamètres").build());
 
-        insertInteractItem(inventory, 22, new ItemBuilder(Material.FIREWORK).setName("§7» §6Effet de kill")
-                .onClick(event -> menuManager.open(new KillEffectGui(game, gamePlayer, this))));
-
-        insertInteractItem(inventory, 30, new ItemBuilder(Material.NOTE_BLOCK).setName("§7» §6Son de kill")
-                .onClick(event -> menuManager.open(new KillSoundGui(game, gamePlayer, this))));
-
-        insertInteractItem(inventory, 31, new ItemBuilder(Material.STAINED_CLAY).setName("§7» §6Blocs")
-                .onClick(event -> menuManager.open(new BlockGui(game, gamePlayer, this))));
-
-        insertInteractItem(inventory, 32, new ItemBuilder(Material.DIAMOND_SWORD).setName("§7» §6Épée").flag(ItemFlag.HIDE_ATTRIBUTES)
-                .onClick(event -> menuManager.open(new SwordGui(game, gamePlayer, this))));
-
-        insertInteractItem(inventory, 49, new ItemBuilder(Material.DARK_OAK_DOOR_ITEM).setName("§c→ Fermer le menu")
-                .onClick(event -> gamePlayer.getPlayer().closeInventory()));
+        inventory.setItem(20, new ItemBuilder(Material.PAPER).setName("reset stat").build());
+        inventory.setItem(21, new ItemBuilder(Material.DIAMOND_SWORD).setName("edit kit").build());
+        inventory.setItem(22, new ItemBuilder(Material.WATCH).setName("choix du temps").build());
+        inventory.setItem(23, new ItemBuilder(Material.BOOK_AND_QUILL).setName("afficher messages de kill").build());
     }
 
 }
