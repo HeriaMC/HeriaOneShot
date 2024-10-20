@@ -22,14 +22,16 @@ public class OneShotPlayer extends FFAGamePlayer {
     private final HeriaUnlockable unlockedCosmetics;
     private final Map<CosmeticType, Cosmetic> selectedCosmetics;
 
+    private OneShotPlayerTime time;
     private OneShotPlayer lastAttacker;
 
-    public OneShotPlayer(UUID uuid, int kills, int deaths, int killStreak, int bestKillStreak, double wallet, HeriaUnlockable unlockedCosmetics, Map<CosmeticType, Cosmetic> selectedCosmetics, boolean spectator) {
+    public OneShotPlayer(UUID uuid, int kills, int deaths, int killStreak, int bestKillStreak, double wallet, HeriaUnlockable unlockedCosmetics, Map<CosmeticType, Cosmetic> selectedCosmetics, OneShotPlayerTime time, boolean spectator) {
         super(uuid, kills, deaths, killStreak, bestKillStreak, spectator);
         this.points = new OneShotCoins(wallet);
         this.unlockedCosmetics = unlockedCosmetics;
         this.selectedCosmetics = selectedCosmetics;
         this.kit = new OneShotGameKit(this);
+        this.time = time;
         this.lastAttacker = null;
     }
 
@@ -60,6 +62,11 @@ public class OneShotPlayer extends FFAGamePlayer {
 
         player.setHealth(20);
         player.getActivePotionEffects().clear();
+    }
+
+    public void setTime(OneShotPlayerTime time) {
+        this.time = time;
+        player.setPlayerTime(time.getTicks(), false);
     }
 
 }

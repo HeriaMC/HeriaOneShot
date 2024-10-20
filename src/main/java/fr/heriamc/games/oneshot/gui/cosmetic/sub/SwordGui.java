@@ -17,7 +17,7 @@ public class SwordGui extends SubCosmeticGui<SwordCosmetics> {
 
     @Override
     public void setup(Inventory inventory) {
-        setBorder(inventory, DyeColor.SILVER.getWoolData());
+        setBorder(inventory, DyeColor.GREEN.getWoolData());
         insertCategoryIcon(inventory, Material.DIAMOND_SWORD, "§7» §6Épée");
 
         insertFilterButton(inventory, 48);

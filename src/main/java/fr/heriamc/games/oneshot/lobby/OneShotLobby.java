@@ -17,7 +17,9 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
     @Override
     protected void processJoin(OneShotGame game, OneShotPlayer gamePlayer) {
         var rank = gamePlayer.getHeriaPlayer().getRank();
+
         gamePlayer.setGameMode(GameMode.ADVENTURE);
+        gamePlayer.setTime(gamePlayer.getTime());
 
         NameTag.setNameTag(gamePlayer.getPlayer(), rank.getPrefix(), " ", rank.getTabPriority());
 

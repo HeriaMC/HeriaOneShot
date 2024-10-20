@@ -59,6 +59,7 @@ public class OneShotGame extends FFAGame<OneShotPlayer, OneShotGameSettings, One
                 data.getKillStreak(), data.getBestKillStreak(),
                 data.getPoints(),
                 dataManager.getUnlockable(uuid), selectedCosmetics,
+                data.getTime(),
                 spectator);
     }
 

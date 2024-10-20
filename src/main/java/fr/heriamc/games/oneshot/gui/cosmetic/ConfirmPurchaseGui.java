@@ -28,7 +28,7 @@ public class ConfirmPurchaseGui extends ConfirmMenu {
             var clickMessage = new TextComponent("§e§l[CLIQUEZ ICI]");
             clickMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/select " + cosmetic.getType().name() + " " + cosmetic.getId()));
 
-            var message = new TextComponent(new TextComponent(OneShotMessages.PREFIX.getMessageWithoutPrefix()), clickMessage, new TextComponent(" §apour équiper"));
+            var message = new TextComponent(new TextComponent(OneShotMessages.PREFIX.getMessageWithoutPrefix()), clickMessage, new TextComponent(" §apour équiper."));
 
             player.sendMessage(OneShotMessages.SHOP_SUCCESSFUL_PURCHASE.getMessage(cosmetic.getName()));
             player.spigot().sendMessage(message);

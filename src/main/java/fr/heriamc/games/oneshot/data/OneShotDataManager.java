@@ -9,6 +9,7 @@ import fr.heriamc.games.oneshot.cosmetic.block.BlockCosmetics;
 import fr.heriamc.games.oneshot.cosmetic.kill.KillCosmetics;
 import fr.heriamc.games.oneshot.cosmetic.sound.SoundCosmetics;
 import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
+import fr.heriamc.games.oneshot.player.OneShotPlayerTime;
 import fr.heriamc.games.oneshot.player.data.OneShotPlayerData;
 import lombok.Getter;
 
@@ -32,7 +33,7 @@ public class OneShotDataManager extends PersistentDataManager<UUID, OneShotPlaye
 
     @Override
     public OneShotPlayerData getDefault() {
-        return new OneShotPlayerData(null, 0, 0, 0, 0, 0, defaultCosmetics);
+        return new OneShotPlayerData(null, 0, 0, 0, 0, 0, defaultCosmetics, OneShotPlayerTime.DAY);
     }
 
     public HeriaUnlockable getUnlockable(UUID uuid) {
