@@ -45,6 +45,7 @@ public class OneShotPlayer extends FFAGamePlayer {
 
         addKill();
         addKillStreak();
+        points.add(2.0);
     }
 
     public void onDeath() {

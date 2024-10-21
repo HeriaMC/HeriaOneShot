@@ -8,6 +8,7 @@ import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetic;
 import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotKillStreakMessage;
+import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -141,8 +142,8 @@ public class PlayerDamageListener implements Listener {
     private void handleDeathByArrow(OneShotGame game, OneShotPlayer shooter, OneShotPlayer victim) {
         var distance = shooter.getLocation().distance(victim.getLocation());
 
-        // USE AN ENUM FOR THAT
-        sendActionBar(game, shooter, victim, " §7(Distance: §b" + String.format("%.2f", distance) + "§7)");
+        sendRewardActionBar(shooter);
+        game.broadcast(OneShotMessages.KILL_MESSAGE.getMessage(shooter.getName(), victim.getName(), "§7(Distance: §b" + String.format("%.2f", distance) + "§7)"));
 
         shooter.onKill();
         victim.onDeath();
@@ -156,7 +157,8 @@ public class PlayerDamageListener implements Listener {
 
     private void handleDeath(OneShotGame game, OneShotPlayer attacker, OneShotPlayer victim) {
         if (attacker != null) {
-            sendActionBar(game, attacker, victim, "");
+            sendRewardActionBar(attacker);
+            game.broadcast(OneShotMessages.KILL_MESSAGE.getMessage(attacker.getName(), victim.getName(), ""));
             attacker.onKill();
             OneShotKillStreakMessage.sendMessage(game, attacker.getKillStreak(), attacker);
         }
@@ -165,16 +167,8 @@ public class PlayerDamageListener implements Listener {
         game.getLobby().onSetup(game, victim);
     }
 
-    private void sendActionBar(OneShotGame game, OneShotPlayer attacker, OneShotPlayer victim, String distance) {
-        VirtualThreading.runAsync(() -> {
-            // USE AN ENUM FOR THAT
-            attacker.sendActionBar("§7§l➼ §7Tu as tué §c" + victim.getName() + " §7!" + distance);
-            victim.sendActionBar("§7§l➼ §7Vous avez été tué par §c" + attacker.getName() + " §7!" + distance);
-
-            game.getPlayers().values().stream()
-                    .filter(gamePlayer -> !gamePlayer.equals(victim) && !gamePlayer.equals(attacker))
-                    .forEach(gamePlayer -> gamePlayer.sendActionBar("§7➼ §c" + attacker.getName() + " §7a tué §c" + victim.getName() + " §7!" + distance));
-        });
+    private void sendRewardActionBar(OneShotPlayer attacker) {
+        VirtualThreading.runAsync(() -> OneShotMessages.KILL_REWARD_MESSAGE.sendAsActionBar(attacker, 2));
     }
 
 }

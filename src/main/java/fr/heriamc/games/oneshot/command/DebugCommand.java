@@ -17,7 +17,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         COINS
      */
 
-    @HeriaCommand(name = "setCoins", power = HeriaRank.DEV)
+    @HeriaCommand(name = "setCoins", power = HeriaRank.ADMIN)
     public void setCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
@@ -38,7 +38,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         player.sendMessage("[OneShot] you set your coins to " + arg);
     }
 
-    @HeriaCommand(name = "addCoins", power = HeriaRank.DEV)
+    @HeriaCommand(name = "addCoins", power = HeriaRank.ADMIN)
     public void addCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);
@@ -60,7 +60,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         player.sendMessage("[OneShot] you now have " + gamePlayer.getPoints().getWalletFormated());
     }
 
-    @HeriaCommand(name = "removeCoins", power = HeriaRank.DEV)
+    @HeriaCommand(name = "removeCoins", power = HeriaRank.ADMIN)
     public void removeCoins(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);

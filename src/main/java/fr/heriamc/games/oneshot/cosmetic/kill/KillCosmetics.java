@@ -15,7 +15,8 @@ import java.util.List;
 public enum KillCosmetics implements KillCosmetic {
 
     NONE ("oneshot.effects.none", "Aucun", Material.BARRIER, 0, HeriaRank.PLAYER, false),
-    FIRE_WORK ("oneshot.effects.firework", "§6Feu d'artifice", Material.FIREWORK, 1000, HeriaRank.PLAYER, true);
+    FIRE_WORK ("oneshot.effects.firework", "§6Feu d'artifice", Material.FIREWORK, 1000, HeriaRank.PLAYER, true),
+    BLOOD ("oneshot.effects.blood", "§cSanglant", Material.REDSTONE, 1000, HeriaRank.PLAYER, true);
 
     private final String id, name;
 
@@ -65,6 +66,11 @@ public enum KillCosmetics implements KillCosmetic {
     @Override
     public boolean has(OneShotPlayer gamePlayer) {
         return gamePlayer.getUnlockedCosmetics().isUnlocked(id);
+    }
+
+    @Override
+    public boolean hasRequiredRank(OneShotPlayer gamePlayer) {
+        return gamePlayer.getHeriaPlayer().getRank().getPower() >= requiredRank.getPower();
     }
 
     @Override

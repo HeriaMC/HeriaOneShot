@@ -19,6 +19,9 @@ public enum OneShotMessages {
     SHOP_SUCCESSFUL_PURCHASE ("§aVous avez acheter %s §a!"),
     SHOP_FAIL_PURCHASE ("§c"),
 
+    KILL_MESSAGE ("§e%s §7a tué §c%s §7! %s"),
+    KILL_REWARD_MESSAGE ("§7§l➼ §eVous avez reçu §6%d ⛃"),
+
     UNAVAILABLE_FUNCTIONALITY ("§cCette fonctionnalité n'est pas encore disponible.");
 
     private String message;
@@ -62,6 +65,10 @@ public enum OneShotMessages {
         gamePlayer.sendTitle(fadeIn, stay, fadeOut,
                 title == null ? "" : title,
                 subTitle == null ? "" : subTitle);
+    }
+
+    public void sendAsActionBar(OneShotPlayer gamePlayer, Object... objects) {
+        gamePlayer.sendActionBar(message.formatted(objects));
     }
 
     public String getMessageWithoutPrefix() {

@@ -43,8 +43,8 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
     public void inventory(Inventory inventory) {
         switch (currentFilter) {
             case ALL -> updatePagination();
-            case OWNED -> updatePagination(cosmetic -> gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
-            case NOT_OWNED -> updatePagination(cosmetic -> !gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
+            case OWNED -> updatePagination(cosmetic -> (!cosmetic.isPurchasable() && cosmetic.hasRequiredRank(gamePlayer)) || gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
+            case NOT_OWNED -> updatePagination(cosmetic -> (cosmetic.isPurchasable() || !cosmetic.hasRequiredRank(gamePlayer)) && !gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()));
         }
 
         setup(inventory);
@@ -53,22 +53,43 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
     @Override
     protected ItemBuilder item(C cosmetic, int i, int i1) {
         var icon = new ItemBuilder(cosmetic.getIcon());
+        List<String> lore = new ArrayList<>();
 
         if (cosmetic.isSelected(gamePlayer))
             icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
 
+        if (!cosmetic.isPurchasable())
+            lore.addAll(Arrays.asList(
+                    " ",
+                    "§8» §7Requis: " + cosmetic.getRequiredRank().getPrefix(),
+                    " ",
+                    gamePlayer.getHeriaPlayer().getRank().getPower() >= cosmetic.getRequiredRank().getPower()
+                            ? "§6§l❱ §eClique pour équiper"
+                            : "§6§l❱ §cVous n'avez pas le grade requis"));
+        else
+            lore.addAll(Arrays.asList(
+                    " ",
+                    gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
+                            ? "§8» §7Prix: §aPosséder"
+                            : "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",
+                    "§8» §7Requis: " + cosmetic.getRequiredRank().getPrefix(),
+                    " ",
+                    gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
+                            ? "§6§l❱ §eClique pour équiper"
+                            : "§6§l❱ §eClique pour acheter"));
+
+
         return icon.setName(cosmetic.isSelected(gamePlayer) ? cosmetic.getName() + " §a[Sélectionner]" : cosmetic.getName())
-                .setLoreWithList(
-                        " ",
-                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId()) ?
-                                "§8» §7Prix: §aPosséder" : "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",
-                        " ",
-                        gamePlayer.getUnlockedCosmetics().isUnlocked(cosmetic.getId())
-                                ? "§6§l❱ §eClique pour équiper"
-                                : "§6§l❱ §eClique pour acheter"
-                )
+                .setLoreWithList(lore)
                 .flag(ItemFlag.HIDE_ATTRIBUTES)
                 .onClick(event -> {
+                    if (cosmetic.hasRequiredRank(gamePlayer) && !cosmetic.isPurchasable() && !cosmetic.isSelected(gamePlayer)) {
+                        cosmetic.select(gamePlayer);
+                        gamePlayer.playSound(Sound.CLICK, 10f, 10f);
+                        updateMenu();
+                        return;
+                    }
+
                     if (cosmetic.canSelect(gamePlayer)) {
                         cosmetic.select(gamePlayer);
                         gamePlayer.playSound(Sound.CLICK, 10f, 10f);

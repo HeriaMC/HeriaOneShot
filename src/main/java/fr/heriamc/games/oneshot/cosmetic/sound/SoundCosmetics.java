@@ -17,7 +17,10 @@ import java.util.List;
 public enum SoundCosmetics implements SoundCosmetic {
 
     NONE ("oneshot.sounds.none", "Aucun", null, Material.BARRIER, 0, HeriaRank.PLAYER, false),
-    EXPLOSION ("oneshot.sounds.explosion", "§4Son explosif", Sound.EXPLODE, Material.TNT, 1000, HeriaRank.PLAYER, true);
+    EXPLOSION ("oneshot.sounds.explosion", "§4Son explosif", Sound.EXPLODE, Material.TNT, 1000, HeriaRank.PLAYER, true),
+    WATER ("oneshot.sounds.water", "§9Son d'eau", Sound.WATER, Material.WATER_BUCKET, 100, HeriaRank.PLAYER, true),
+    SKELETON ( "oneshot.sounds.skeleton", "§fSon squelettique", Sound.SKELETON_HURT, Material.BONE, 100, HeriaRank.PLAYER, true),
+    ANVIL ("oneshot.sounds.anvil", "§8Son d'enclume", Sound.ANVIL_USE, Material.ANVIL, 100, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Sound sound;
@@ -67,6 +70,11 @@ public enum SoundCosmetics implements SoundCosmetic {
     @Override
     public boolean has(OneShotPlayer gamePlayer) {
         return gamePlayer.getUnlockedCosmetics().isUnlocked(id);
+    }
+
+    @Override
+    public boolean hasRequiredRank(OneShotPlayer gamePlayer) {
+        return gamePlayer.getHeriaPlayer().getRank().getPower() >= requiredRank.getPower();
     }
 
     @Override

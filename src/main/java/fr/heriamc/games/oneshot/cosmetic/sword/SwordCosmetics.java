@@ -76,6 +76,11 @@ public enum SwordCosmetics implements SwordCosmetic {
     }
 
     @Override
+    public boolean hasRequiredRank(OneShotPlayer gamePlayer) {
+        return gamePlayer.getHeriaPlayer().getRank().getPower() >= requiredRank.getPower();
+    }
+
+    @Override
     public boolean isSelected(OneShotPlayer gamePlayer) {
         return gamePlayer.hasSelected(CosmeticType.SWORD, this);
     }

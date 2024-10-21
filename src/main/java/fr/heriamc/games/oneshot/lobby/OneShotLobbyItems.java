@@ -27,13 +27,13 @@ public enum OneShotLobbyItems implements FFAGameLobbyItems {
             new ItemBuilder(Material.IRON_AXE).setName("§6Jouer§8・§7Clic droit").setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build(),
             (addon, game, gamePlayer) -> game.play(gamePlayer)),
 
-    COSMETICS (1,
-            new ItemBuilder(Material.CHEST).setName("§eCosmétiques§8・§7Clic droit").build(),
-            (addon, game, gamePlayer) -> addon.openGui(new CosmeticGui(addon, game, gamePlayer))),
-
-    SPECTATE (2,
+    SPECTATE (1,
             new ItemBuilder(Material.FEATHER).setName("§fSpectateur§8・§7Clic droit").build(),
             (addon, game, gamePlayer) -> gamePlayer.sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage())),
+
+    COSMETICS (4,
+            new ItemBuilder(Material.CHEST).setName("§eCosmétiques§8・§7Clic droit").build(),
+            (addon, game, gamePlayer) -> addon.openGui(new CosmeticGui(addon, game, gamePlayer))),
 
     SETTINGS (7,
             new ItemBuilder(Material.REDSTONE_COMPARATOR).setName("§cParamètres§8・§7Clic droit").build(),

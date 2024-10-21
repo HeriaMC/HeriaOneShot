@@ -20,10 +20,10 @@ public enum BlockCosmetics implements BlockCosmetic {
     ICE ("oneshot.blocks.ice", "§9Bloc de glace", Material.PACKED_ICE, 100, HeriaRank.PLAYER, true),
     SANDSTONE ("oneshot.blocks.sandstone", "§eBloc de sandstone", Material.SANDSTONE, 100, HeriaRank.PLAYER, true),
 
-    IRON ("oneshot.blocks.iron", "§fBloc de fer", Material.IRON_BLOCK, 1000, HeriaRank.PLAYER, true),
-    GOLD ("oneshot.blocks.gold", "§eBloc d'or", Material.GOLD_BLOCK, 1000, HeriaRank.PLAYER, true),
-    EMERALD ("oneshot.blocks.emerald", "§aBloc d'émeraude", Material.EMERALD_BLOCK, 1000, HeriaRank.PLAYER, true),
-    DIAMOND ("oneshot.blocks.diamond", "§bBloc de diamant", Material.DIAMOND_BLOCK, 1000, HeriaRank.PLAYER, true);
+    IRON ("oneshot.blocks.iron", "§fBloc de fer", Material.IRON_BLOCK, 1000, HeriaRank.VIP, false),
+    GOLD ("oneshot.blocks.gold", "§eBloc d'or", Material.GOLD_BLOCK, 1000, HeriaRank.VIP_PLUS, false),
+    EMERALD ("oneshot.blocks.emerald", "§aBloc d'émeraude", Material.EMERALD_BLOCK, 0, HeriaRank.SUPER_VIP, false),
+    DIAMOND ("oneshot.blocks.diamond", "§bBloc de diamant", Material.DIAMOND_BLOCK, 0, HeriaRank.SUPREME, false);
 
     private final String id, name;
     private final Material material;
@@ -73,6 +73,11 @@ public enum BlockCosmetics implements BlockCosmetic {
     @Override
     public boolean has(OneShotPlayer gamePlayer) {
         return gamePlayer.getUnlockedCosmetics().getUnlockableData().getOrDefault(id, false);
+    }
+
+    @Override
+    public boolean hasRequiredRank(OneShotPlayer gamePlayer) {
+        return gamePlayer.getHeriaPlayer().getRank().getPower() >= requiredRank.getPower();
     }
 
     @Override
