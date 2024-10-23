@@ -5,11 +5,12 @@ import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -18,9 +19,10 @@ public enum SoundCosmetics implements SoundCosmetic {
 
     NONE ("oneshot.sounds.none", "Aucun", null, Material.BARRIER, 0, HeriaRank.PLAYER, false),
     EXPLOSION ("oneshot.sounds.explosion", "§4Son explosif", Sound.EXPLODE, Material.TNT, 1000, HeriaRank.PLAYER, true),
-    WATER ("oneshot.sounds.water", "§9Son d'eau", Sound.WATER, Material.WATER_BUCKET, 100, HeriaRank.PLAYER, true),
+    WATER ("oneshot.sounds.water", "§9Plouf", Sound.SPLASH, Material.WATER_BUCKET, 100, HeriaRank.PLAYER, true),
     SKELETON ( "oneshot.sounds.skeleton", "§fSon squelettique", Sound.SKELETON_HURT, Material.BONE, 100, HeriaRank.PLAYER, true),
-    ANVIL ("oneshot.sounds.anvil", "§8Son d'enclume", Sound.ANVIL_USE, Material.ANVIL, 100, HeriaRank.PLAYER, true);
+    ANVIL ("oneshot.sounds.anvil", "§8Son d'enclume", Sound.ANVIL_LAND, Material.ANVIL, 100, HeriaRank.PLAYER, true),
+    CAT ("oneshot.sounds.cat", "§eChatongue", Sound.CAT_MEOW, Material.RAW_FISH, 100, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Sound sound;
@@ -42,8 +44,14 @@ public enum SoundCosmetics implements SoundCosmetic {
     }
 
     @Override
-    public void play(Collection<OneShotPlayer> collection) {
+    public void play(OneShotPlayer gamePlayer, Location location) {
+        gamePlayer.playSound(sound, 1f, 1f);
 
+        location.getWorld()
+                .getNearbyEntities(location, 10, 10, 10).stream()
+                .filter(entity -> entity instanceof Player)
+                .map(Player.class::cast)
+                .forEach(player -> player.playSound(location, sound, 1f, 1f));
     }
 
     @Override

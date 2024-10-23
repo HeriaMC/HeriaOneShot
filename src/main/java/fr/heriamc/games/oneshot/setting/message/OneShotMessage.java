@@ -35,7 +35,7 @@ public class OneShotMessage {
                 "§7❱❱ §3%player_name% §7est survolté ! Il a réussi un tir remarquable à §b§l%distance% mètres §7!");
 
         MultiThreading.schedule(() -> {
-            setCurrentAutoMessage(currentAutoMessage.nextMessage());
+            this.currentAutoMessage = currentAutoMessage.nextMessage();
             game.broadcast(getCurrentAutoMessage().getMessage());
         }, 1, 5, TimeUnit.MINUTES);
     }

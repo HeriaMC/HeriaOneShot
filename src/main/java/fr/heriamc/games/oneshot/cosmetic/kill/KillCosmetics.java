@@ -1,10 +1,14 @@
 package fr.heriamc.games.oneshot.cosmetic.kill;
 
 import fr.heriamc.api.user.rank.HeriaRank;
+import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
+import fr.heriamc.games.oneshot.cosmetic.kill.effect.BloodEffect;
+import fr.heriamc.games.oneshot.cosmetic.kill.effect.FireWorkEffect;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.util.Arrays;
@@ -14,11 +18,12 @@ import java.util.List;
 @AllArgsConstructor
 public enum KillCosmetics implements KillCosmetic {
 
-    NONE ("oneshot.effects.none", "Aucun", Material.BARRIER, 0, HeriaRank.PLAYER, false),
-    FIRE_WORK ("oneshot.effects.firework", "§6Feu d'artifice", Material.FIREWORK, 1000, HeriaRank.PLAYER, true),
-    BLOOD ("oneshot.effects.blood", "§cSanglant", Material.REDSTONE, 1000, HeriaRank.PLAYER, true);
+    NONE ("oneshot.effects.none", "Aucun", null, Material.BARRIER, 0, HeriaRank.PLAYER, false),
+    FIRE_WORK ("oneshot.effects.firework", "§6Feu d'artifice", new FireWorkEffect(), Material.FIREWORK, 1000, HeriaRank.PLAYER, true),
+    BLOOD ("oneshot.effects.blood", "§cSanglant", new BloodEffect(), Material.REDSTONE, 1000, HeriaRank.PLAYER, true);
 
     private final String id, name;
+    private final KillEffectTask task;
 
     private final Material icon;
     private int price;
@@ -37,9 +42,8 @@ public enum KillCosmetics implements KillCosmetic {
     }
 
     @Override
-    public void play(OneShotPlayer gamePlayer) {
-        // TODO: run task
-        // task.run();
+    public void play(OneShotPlayer attacker, Location location) {
+        VirtualThreading.runAsync(() -> task.run(attacker, location));
     }
 
     @Override

@@ -35,6 +35,10 @@ public class OneShotPlayer extends FFAGamePlayer {
         this.lastAttacker = null;
     }
 
+    public <C extends Cosmetic> C getSelectedCosmetic(CosmeticType type, Class<C> clazz) {
+        return clazz.cast(selectedCosmetics.get(type));
+    }
+
     public <C extends Cosmetic> boolean hasSelected(CosmeticType type, C cosmetic) {
         return selectedCosmetics.get(type) == cosmetic;
     }

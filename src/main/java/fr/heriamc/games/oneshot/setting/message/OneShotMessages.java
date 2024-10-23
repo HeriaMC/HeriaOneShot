@@ -19,7 +19,8 @@ public enum OneShotMessages {
     SHOP_SUCCESSFUL_PURCHASE ("§aVous avez acheter %s §a!"),
     SHOP_FAIL_PURCHASE ("§c"),
 
-    KILL_MESSAGE ("§e%s §7a tué §c%s §7! %s"),
+    KILL_KILLER_MESSAGE ("§aVous avez tué §c%s §a! %s"),
+    KILL_VICTIM_MESSAGE ("§aVous avez été tué par §c%s §a! %s"),
     KILL_REWARD_MESSAGE ("§7§l➼ §eVous avez reçu §6%d ⛃"),
 
     UNAVAILABLE_FUNCTIONALITY ("§cCette fonctionnalité n'est pas encore disponible.");

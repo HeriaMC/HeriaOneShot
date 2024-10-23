@@ -86,7 +86,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         COSMETICS
      */
 
-    @HeriaCommand(name = "select", inGameOnly = true)
+    @HeriaCommand(name = "select", power = HeriaRank.PLAYER)
     public void selectCosmetic(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);

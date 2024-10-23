@@ -2,8 +2,12 @@ package fr.heriamc.games.oneshot.listener;
 
 import fr.heriamc.games.api.pool.GameManager;
 import fr.heriamc.games.engine.ffa.player.FFAGamePlayerState;
-import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.OneShotGame;
+import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
+import fr.heriamc.games.oneshot.cosmetic.kill.KillCosmetic;
+import fr.heriamc.games.oneshot.cosmetic.kill.KillCosmetics;
+import fr.heriamc.games.oneshot.cosmetic.sound.SoundCosmetic;
+import fr.heriamc.games.oneshot.cosmetic.sound.SoundCosmetics;
 import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetic;
 import fr.heriamc.games.oneshot.cosmetic.sword.SwordCosmetics;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
@@ -88,7 +92,9 @@ public class PlayerDamageListener implements Listener {
 
                 var shooter = game.getNullablePlayer(shooterPlayer);
 
-                if (shooter == null || shooter.equals(gamePlayer)) return;
+                if (shooter == null
+                        || shooter.equals(gamePlayer)
+                        || gamePlayer.getState() == FFAGamePlayerState.IN_LOBBY) return;
 
                 gamePlayer.setLastAttacker(shooter);
 
@@ -142,13 +148,15 @@ public class PlayerDamageListener implements Listener {
     private void handleDeathByArrow(OneShotGame game, OneShotPlayer shooter, OneShotPlayer victim) {
         var distance = shooter.getLocation().distance(victim.getLocation());
 
-        sendRewardActionBar(shooter);
-        game.broadcast(OneShotMessages.KILL_MESSAGE.getMessage(shooter.getName(), victim.getName(), "§7(Distance: §b" + String.format("%.2f", distance) + "§7)"));
+        sendKillMessage(shooter, victim, "§7(Distance: §b" + String.format("%.2f", distance) + "§7)");
+
+        playSoundCosmetic(shooter, victim);
+        playEffectCosmetic(shooter, victim);
 
         shooter.onKill();
         victim.onDeath();
 
-        OneShotKillStreakMessage.sendMessage(game, shooter.getKillStreak(), shooter);
+        OneShotKillStreakMessage.sendMessage(game, shooter.getKillStreak(), shooter.getName());
         game.getMessage().sendDistanceMessage((int) distance, shooter);
 
         victim.getCraftPlayer().getHandle().getDataWatcher().watch(9, (byte) 0);
@@ -157,18 +165,40 @@ public class PlayerDamageListener implements Listener {
 
     private void handleDeath(OneShotGame game, OneShotPlayer attacker, OneShotPlayer victim) {
         if (attacker != null) {
-            sendRewardActionBar(attacker);
-            game.broadcast(OneShotMessages.KILL_MESSAGE.getMessage(attacker.getName(), victim.getName(), ""));
+            sendKillMessage(attacker, victim, "");
+
+            playSoundCosmetic(attacker, victim);
+            playEffectCosmetic(attacker, victim);
+
             attacker.onKill();
-            OneShotKillStreakMessage.sendMessage(game, attacker.getKillStreak(), attacker);
+            OneShotKillStreakMessage.sendMessage(game, attacker.getKillStreak(), attacker.getName());
         }
 
         victim.onDeath();
         game.getLobby().onSetup(game, victim);
     }
 
-    private void sendRewardActionBar(OneShotPlayer attacker) {
-        VirtualThreading.runAsync(() -> OneShotMessages.KILL_REWARD_MESSAGE.sendAsActionBar(attacker, 2));
+    private void playEffectCosmetic(OneShotPlayer attacker, OneShotPlayer victim) {
+        var effect = attacker.getSelectedCosmetic(CosmeticType.KILL_EFFECT, KillCosmetic.class);
+
+        if (effect == null || effect == KillCosmetics.NONE) return;
+
+        effect.play(attacker, victim.getLocation());
+    }
+
+    private void playSoundCosmetic(OneShotPlayer attacker, OneShotPlayer victim) {
+        var sound = attacker.getSelectedCosmetic(CosmeticType.SOUND_EFFECT, SoundCosmetic.class);
+
+        if (sound == null || sound == SoundCosmetics.NONE) return;
+
+        sound.play(attacker, victim.getLocation());
+    }
+
+    private void sendKillMessage(OneShotPlayer attacker, OneShotPlayer victim, String distance) {
+        OneShotMessages.KILL_REWARD_MESSAGE.sendAsActionBar(attacker, 2);
+
+        victim.sendMessage(OneShotMessages.KILL_VICTIM_MESSAGE.getMessage(attacker.getName(), distance));
+        attacker.sendMessage(OneShotMessages.KILL_KILLER_MESSAGE.getMessage(victim.getName(), distance));
     }
 
 }

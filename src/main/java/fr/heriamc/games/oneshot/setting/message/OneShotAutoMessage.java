@@ -1,9 +1,7 @@
 package fr.heriamc.games.oneshot.setting.message;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public enum OneShotAutoMessage {
 
@@ -17,6 +15,10 @@ public enum OneShotAutoMessage {
 
     public OneShotAutoMessage nextMessage() {
         return messages[(ordinal() + 1) % messages.length];
+    }
+
+    public String getMessage() {
+        return "§6§lONESHOT §8┃ " + message;
     }
 
 }

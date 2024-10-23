@@ -8,6 +8,7 @@ import fr.heriamc.games.oneshot.cosmetic.Cosmetic;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.DyeColor;
 import org.bukkit.Sound;
@@ -27,6 +28,7 @@ public class ConfirmPurchaseGui extends ConfirmMenu {
 
             var clickMessage = new TextComponent("§e§l[CLIQUEZ ICI]");
             clickMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/select " + cosmetic.getType().name() + " " + cosmetic.getId()));
+            clickMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("§eCliquez ici pour équiper !")));
 
             var message = new TextComponent(new TextComponent(OneShotMessages.PREFIX.getMessageWithoutPrefix()), clickMessage, new TextComponent(" §apour équiper."));
 
