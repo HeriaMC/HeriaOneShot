@@ -11,10 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -73,6 +70,11 @@ public record CancelListener(OneShotAddon addon, GameManager<OneShotGame> gameMa
             case IN_LOBBY -> event.setCancelled(true);
             case IN_GAME -> event.setCancelled(false);
         }
+    }
+
+    @EventHandler
+    public void onSpawn(ItemSpawnEvent event) {
+        event.setCancelled(true);
     }
 
     @EventHandler
