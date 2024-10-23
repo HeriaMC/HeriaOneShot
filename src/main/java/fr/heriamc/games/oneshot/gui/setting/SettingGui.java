@@ -27,6 +27,22 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         inventory.setItem(23, new ItemBuilder(Material.BOOK_AND_QUILL).setName("afficher messages de kill").build());
 
         insertTimeChangerButton(inventory, 22);
+        insertResetStatsButton(inventory, 100, 20);
+    }
+
+    private void insertResetStatsButton(Inventory inventory, int price, int slot) {
+
+        insertInteractItem(inventory, slot, new ItemBuilder(Material.PAPER).setName("§7» §6Réinitialisation des statistiques")
+                .setLoreWithList(
+                        " ",
+                        "§7Vous perdrais toutes vos §emorts§7, vos",
+                        "§ckills §7et votre record de §bkill streak",
+                        "§7mais vous garderez vos §6points",
+                        " ",
+                        "§8» §7Prix: §6" + price + " ⛃",
+                        " ",
+                        "§6§l❱ §eClique pour réinitialiser")
+                .onClick(event -> {}));
     }
 
     private void insertTimeChangerButton(Inventory inventory, int slot) {
@@ -37,9 +53,14 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         insertInteractItem(inventory, slot, new ItemBuilder(Material.WATCH).setName("§7» §6Temps")
                 .setLoreWithList(
                         " ",
-                        "§7▲ Statut: " + nextTime.getDisplayName(),
-                        "§e■ Statut: " + currentTime.getDisplayName(),
-                        "§7▼ Statut: " + previousTime.getDisplayName()
+                        "§7Option inutile si vous avez un",
+                        "§7mod pour changer le temps",
+                        " ",
+                        "§8▲ Statut: " + nextTime.getDisplayName(),
+                        "§a■ Statut: " + currentTime.getDisplayName(),
+                        "§8▼ Statut: " + previousTime.getDisplayName(),
+                        " ",
+                        "§6§l❱ §eClique pour changer le temps"
                 )
                 .onClick(event -> {
                     gamePlayer.setTime(event.isLeftClick() ? nextTime : previousTime);
