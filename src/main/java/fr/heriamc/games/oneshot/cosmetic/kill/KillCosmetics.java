@@ -43,6 +43,8 @@ public enum KillCosmetics implements KillCosmetic {
 
     @Override
     public void play(OneShotPlayer attacker, Location location) {
+        if (task == null) return;
+
         VirtualThreading.runAsync(() -> task.run(attacker, location));
     }
 

@@ -22,7 +22,11 @@ public enum SoundCosmetics implements SoundCosmetic {
     WATER ("oneshot.sounds.water", "§9Plouf", Sound.SPLASH, Material.WATER_BUCKET, 100, HeriaRank.PLAYER, true),
     SKELETON ( "oneshot.sounds.skeleton", "§fSon squelettique", Sound.SKELETON_HURT, Material.BONE, 100, HeriaRank.PLAYER, true),
     ANVIL ("oneshot.sounds.anvil", "§8Son d'enclume", Sound.ANVIL_LAND, Material.ANVIL, 100, HeriaRank.PLAYER, true),
-    CAT ("oneshot.sounds.cat", "§eChatongue", Sound.CAT_MEOW, Material.RAW_FISH, 100, HeriaRank.PLAYER, true);
+    CAT ("oneshot.sounds.cat", "§eChatongue", Sound.CAT_MEOW, Material.RAW_FISH, 100, HeriaRank.PLAYER, true),
+    VILLAGER ("oneshot.sounds.villager", "§aVillageois", Sound.VILLAGER_YES, Material.EMERALD, 100, HeriaRank.PLAYER, true),
+    SHEEP ("oneshot.sounds.sheep", "§fBeeeeh", Sound.SHEEP_IDLE, Material.WOOL, 100, HeriaRank.PLAYER, true),
+    ENDER_MAN ("oneshot.sounds.enderman", "§5Enderman", Sound.ENDERMAN_HIT, Material.ENDER_PEARL, 100, HeriaRank.PLAYER, true),
+    DRAGON ("oneshot.sounds.dragon", "§dSmoldé", Sound.ENDERDRAGON_GROWL, Material.ENDER_PORTAL_FRAME, 100, HeriaRank.PLAYER, true);
 
     private final String id, name;
     private final Sound sound;

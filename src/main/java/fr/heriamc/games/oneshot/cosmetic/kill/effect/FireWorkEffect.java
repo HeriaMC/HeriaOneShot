@@ -8,14 +8,11 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class FireWorkEffect implements KillEffectTask {
 
@@ -37,13 +34,7 @@ public class FireWorkEffect implements KillEffectTask {
         var explodePacket = new PacketPlayOutEntityStatus(entityFireworks, (byte) 17);
         var destroyPacket = new PacketPlayOutEntityDestroy(entityFireworks.getId());
 
-        var players = location.getWorld()
-                .getNearbyEntities(location, 20, 20, 20).stream()
-                .filter(entity -> entity instanceof Player)
-                .map(Player.class::cast)
-                .map(player -> ((CraftPlayer) player).getHandle().playerConnection)
-                .collect(Collectors.toList());
-
+        var players = getPlayersConnectionAround(location, 20, 20, 20);
         var gamePlayerConnection = gamePlayer.getCraftPlayer().getHandle().playerConnection;
 
         if (!players.contains(gamePlayerConnection))

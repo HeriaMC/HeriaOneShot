@@ -20,6 +20,9 @@ public class OneShotMessage {
 
     private OneShotAutoMessage currentAutoMessage;
 
+    /*
+        Remake this
+     */
     public OneShotMessage(OneShotGame game) {
         this.game = game;
         this.killDistanceMessages = new HashSet<>();

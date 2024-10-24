@@ -20,6 +20,7 @@ public class OneShotPool extends GamePool<OneShotGame> {
 
     @Override
     public Supplier<OneShotGame> newGame() {
+        // USELESS ???
         if (dataManager == null) throw new NullPointerException("DATA MANAGER NOT INITIALIZED");
 
         return () -> new OneShotGame(dataManager);
