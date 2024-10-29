@@ -1,6 +1,5 @@
 package fr.heriamc.games.oneshot.gui.cosmetic;
 
-import fr.heriamc.bukkit.HeriaBukkit;
 import fr.heriamc.bukkit.menu.HeriaMenu;
 import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.engine.utils.gui.BaseGamePageableGui;
@@ -12,7 +11,6 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 
@@ -25,14 +23,12 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
 
     private static final List<Integer> slots = Arrays.asList(20, 21, 22, 23, 24, 29, 30, 31, 32, 33);
 
-    private final HeriaMenu beforeMenu;
     private final Class<C> enumClass;
 
     protected Filter currentFilter;
 
     public SubCosmeticGui(OneShotGame game, OneShotPlayer gamePlayer, Class<C> enumClass, String name, int size, boolean update, HeriaMenu beforeMenu) {
-        super(game, gamePlayer, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
-        this.beforeMenu = beforeMenu;
+        super(game, gamePlayer, beforeMenu, name, size, update, slots, () -> List.of(enumClass.getEnumConstants()));
         this.enumClass = enumClass;
         this.currentFilter = Filter.ALL;
     }
@@ -139,15 +135,6 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
                     gamePlayer.playSound(Sound.NOTE_PLING, 10f, 10f);
                     updateMenu();
                 }));
-    }
-
-    protected void openGui(HeriaMenu heriaMenu) {
-        HeriaBukkit.get().getMenuManager().open(heriaMenu);
-    }
-
-    protected void closeOrOpenBefore(InventoryClickEvent event) {
-        if (beforeMenu == null) gamePlayer.getPlayer().closeInventory();
-        else HeriaBukkit.get().getMenuManager().open(beforeMenu);
     }
 
     @Getter

@@ -13,13 +13,14 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum CosmeticType {
 
-    BLOCK (BlockCosmetics.class, "blocks"),
-    KILL_EFFECT (KillCosmetics.class, "effects"),
-    SOUND_EFFECT (SoundCosmetics.class, "sounds"),
-    SWORD (SwordCosmetics.class, "swords");
+    BLOCK (BlockCosmetics.class, "blocks", "Bloc"),
+    KILL_EFFECT (KillCosmetics.class, "effects", "Effet"),
+    SOUND_EFFECT (SoundCosmetics.class, "sounds", "Son"),
+    SWORD (SwordCosmetics.class, "swords", "Épée");
 
     private final Class<? extends Enum<? extends Cosmetic>> cosmeticClass;
     private final String id;
+    private final String displayName;
 
     public static final CosmeticType[] types = values();
 
