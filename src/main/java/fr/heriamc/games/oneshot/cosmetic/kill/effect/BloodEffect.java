@@ -18,20 +18,20 @@ public class BloodEffect implements KillEffectTask {
 
         var loc = location.add(0, 1, 0);
 
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
-        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte)0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte )0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.ITEM_CRACK.display(new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
+        ParticleEffect.BLOCK_DUST.display(new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0), 0.2f, 0.2f, 0.2f, 0.1f, 5, loc, 20.0);
     }
 
 }

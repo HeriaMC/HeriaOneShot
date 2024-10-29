@@ -66,12 +66,14 @@ public class PlayerDamageListener implements Listener {
 
             if (gamePlayer == null) return;
 
-            if (event.getDamager() instanceof Player attacker) {
-                var weapon = attacker.getItemInHand();
+            if (event.getDamager() instanceof Player a) {
+                var weapon = a.getItemInHand();
+                var attacker = game.getNullablePlayer(a);
 
-                if (weapon == null || !game.containsPlayer(attacker)) return;
+                if (weapon == null || attacker == null) return;
 
                 event.setDamage(1.0);
+                gamePlayer.setLastAttacker(attacker);
 
                 if (swords.contains(weapon.getType()))
                     event.setDamage(EntityDamageEvent.DamageModifier.BASE, (victim.getMaxHealth() / 3.0) + 0.1);

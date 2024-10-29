@@ -1,7 +1,6 @@
 package fr.heriamc.games.oneshot.lobby;
 
 import fr.heriamc.games.engine.ffa.lobby.FFAGameLobby;
-import fr.heriamc.games.engine.utils.concurrent.VirtualThreading;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
@@ -22,14 +21,11 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
         gamePlayer.setTime(gamePlayer.getTime());
 
         NameTag.setNameTag(gamePlayer.getPlayer(), rank.getPrefix(), " ", rank.getTabPriority());
-
-        sendWelcomeTitle(gamePlayer);
+        OneShotMessages.WELCOME_TITLE.sendAsTitle(gamePlayer , 20, 30, 20);
     }
 
     @Override
-    protected void processSetup(OneShotGame game, OneShotPlayer gamePlayer) {
-
-    }
+    protected void processSetup(OneShotGame game, OneShotPlayer gamePlayer) {}
 
     @Override
     protected void processPlay(OneShotGame game, OneShotPlayer gamePlayer) {
@@ -38,11 +34,6 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
         gamePlayer.getKit().giveKit();
 
         game.getSettings().getGameMapManager().getSpawnPoints().randomTeleport(gamePlayer);
-    }
-
-    private void sendWelcomeTitle(OneShotPlayer gamePlayer) {
-        VirtualThreading.execute(() ->
-                OneShotMessages.WELCOME_TITLE.sendAsTitle(gamePlayer , 20, 30, 20));
     }
 
 }

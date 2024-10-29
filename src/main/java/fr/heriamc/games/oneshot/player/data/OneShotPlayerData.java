@@ -36,4 +36,11 @@ public class OneShotPlayerData implements SerializableData<UUID> {
         this.time = gamePlayer.getTime();
     }
 
+    public void updateStatsOnDisconnect() {
+        this.kills += 1;
+        this.killStreak += 1;
+        this.bestKillStreak = Math.max(killStreak, bestKillStreak);
+        this.points += 2;
+    }
+
 }

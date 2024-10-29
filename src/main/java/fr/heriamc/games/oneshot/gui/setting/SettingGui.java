@@ -4,10 +4,12 @@ import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.engine.utils.gui.BaseGameGui;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
+import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 
 public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
@@ -21,13 +23,22 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
         inventory.setItem(4, new ItemBuilder(Material.REDSTONE_COMPARATOR).setName("§cParamètres").build());
 
-        inventory.setItem(20, new ItemBuilder(Material.PAPER).setName("reset stat").build());
-        inventory.setItem(21, new ItemBuilder(Material.DIAMOND_SWORD).setName("edit kit").build());
-        inventory.setItem(22, new ItemBuilder(Material.WATCH).setName("choix du temps").build());
-        inventory.setItem(23, new ItemBuilder(Material.BOOK_AND_QUILL).setName("afficher messages de kill").build());
-
+        insertResetStatsButton(inventory, 100, 21);
         insertTimeChangerButton(inventory, 22);
-        insertResetStatsButton(inventory, 100, 20);
+        insertEditKitButton(inventory, 23);
+    }
+
+    private void insertEditKitButton(Inventory inventory, int slot) {
+        insertInteractItem(inventory, slot, new ItemBuilder(Material.DIAMOND_SWORD).setName("§7» §6Éditer votre kit")
+                .flag(ItemFlag.HIDE_ATTRIBUTES)
+                .setLoreWithList(
+                        " ",
+                        "§7Vous pouvez choisir l'emplacement",
+                        "§7de vos items lors de votre",
+                        "§7prochaine apparition",
+                        "",
+                        "§6§l❱ §eClique pour éditer")
+                .onClick(event -> event.getWhoClicked().sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage())));
     }
 
     private void insertResetStatsButton(Inventory inventory, int price, int slot) {
