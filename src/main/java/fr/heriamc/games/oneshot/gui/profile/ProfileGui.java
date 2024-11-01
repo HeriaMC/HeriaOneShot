@@ -48,12 +48,22 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                         " ",
                         "§8» §7KS actuel: §e" + gamePlayer.getKillStreak(),
                         "§8» §7Meilleur KS: §a" + gamePlayer.getBestKillStreak(),
-                        "",
+                        " ",
                         "§8» §7Ratio: §d" + gamePlayer.getRatio())
                 .flag(ItemFlag.HIDE_ATTRIBUTES).build());
 
         insertPointsButton(inventory, 22);
         insertCosmeticButton(inventory, 23);
+
+        inventory.setItem(31, new ItemBuilder(Material.PAINTING)
+                .setName("§6Classement")
+                        .setLoreWithList(
+                                " ",
+                                "§8» §7Kills: §e#20",
+                                "§8» §7KS: §e#15",
+                                "§8» §7Points: §e#1"
+                        )
+                .build());
 
         insertInteractItem(inventory, 49, new ItemBuilder(Material.DARK_OAK_DOOR_ITEM)
                 .setName("§c→ Fermer le menu")
@@ -67,7 +77,6 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         lore.add(" ");
         lore.add("§8» §7Points: §6" + gamePlayer.getPoints().getWalletFormated());
         lore.add("§8» §7Solde exact: §6" + gamePlayer.getPoints().getWalletFormated(Utils.complexDecimalFormat));
-
 
         if (target != null) {
             lore.add(" ");
@@ -83,8 +92,7 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                 .setLoreWithList(lore)
                 .onClick(event -> {
                     if (event.getAction().name().contains("DROP") && hasRequiredRank()) {
-                        gamePlayer.closeInventory();
-                        gamePlayer.sendMessage("OPEN EDIT COINS MENU");
+                        openGui(new ProfileEditCoinsGui(game, gamePlayer, target, this));
                         return;
                     }
 

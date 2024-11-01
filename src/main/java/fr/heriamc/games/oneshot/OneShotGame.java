@@ -1,6 +1,6 @@
 package fr.heriamc.games.oneshot;
 
-import fr.heriamc.bukkit.game.size.GameSizeTemplate;
+import fr.heriamc.api.game.size.GameSizeTemplate;
 import fr.heriamc.games.engine.ffa.FFAGame;
 import fr.heriamc.games.oneshot.cosmetic.Cosmetic;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;

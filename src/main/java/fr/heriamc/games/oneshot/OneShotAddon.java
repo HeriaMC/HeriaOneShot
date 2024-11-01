@@ -3,10 +3,7 @@ package fr.heriamc.games.oneshot;
 import fr.heriamc.games.api.addon.GameAddon;
 import fr.heriamc.games.oneshot.command.DebugCommand;
 import fr.heriamc.games.oneshot.data.OneShotDataManager;
-import fr.heriamc.games.oneshot.listener.CancelListener;
-import fr.heriamc.games.oneshot.listener.PlayerBlockListener;
-import fr.heriamc.games.oneshot.listener.PlayerConnectionListener;
-import fr.heriamc.games.oneshot.listener.PlayerDamageListener;
+import fr.heriamc.games.oneshot.listener.*;
 import fr.heriamc.games.oneshot.pool.OneShotPool;
 import lombok.Getter;
 
@@ -30,7 +27,8 @@ public class OneShotAddon extends GameAddon<OneShotPool> {
                 new CancelListener(this, pool.getGamesManager()),
                 new PlayerConnectionListener(heriaApi, dataManager),
                 new PlayerBlockListener(pool.getGamesManager()),
-                new PlayerDamageListener(pool.getGamesManager())
+                new PlayerDamageListener(pool.getGamesManager()),
+                new PlayerChatListener()
         );
 
         registerCommand(new DebugCommand(pool.getGamesManager()));
