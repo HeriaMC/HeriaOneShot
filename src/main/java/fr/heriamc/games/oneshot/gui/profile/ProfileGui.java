@@ -6,9 +6,11 @@ import fr.heriamc.bukkit.utils.ItemBuilder;
 import fr.heriamc.games.engine.utils.Utils;
 import fr.heriamc.games.engine.utils.gui.BaseGameGui;
 import fr.heriamc.games.oneshot.OneShotGame;
+import fr.heriamc.games.oneshot.cosmetic.Cosmetic;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
 import fr.heriamc.games.oneshot.gui.cosmetic.CosmeticGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
+import fr.heriamc.games.oneshot.player.wallet.OneShotCoins;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -17,6 +19,7 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
@@ -43,13 +46,13 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                 .setName("§6Statistiques")
                 .setLoreWithList(
                         " ",
-                        "§8» §7Kills: §c" + gamePlayer.getKills() + " ⚔",
-                        "§8» §7Morts: §c" + gamePlayer.getDeaths() + " ☠",
+                        "§8» §7Kills: §c" + getKills() + " ⚔",
+                        "§8» §7Morts: §c" + getDeaths() + " ☠",
                         " ",
-                        "§8» §7KS actuel: §e" + gamePlayer.getKillStreak(),
-                        "§8» §7Meilleur KS: §a" + gamePlayer.getBestKillStreak(),
+                        "§8» §7KS actuel: §e" + getKillStreak(),
+                        "§8» §7Meilleur KS: §a" + getBestKillStreak(),
                         " ",
-                        "§8» §7Ratio: §d" + gamePlayer.getRatio())
+                        "§8» §7Ratio: §d" + getRatio())
                 .flag(ItemFlag.HIDE_ATTRIBUTES).build());
 
         insertPointsButton(inventory, 22);
@@ -57,12 +60,11 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
         inventory.setItem(31, new ItemBuilder(Material.PAINTING)
                 .setName("§6Classement")
-                        .setLoreWithList(
-                                " ",
-                                "§8» §7Kills: §e#20",
-                                "§8» §7KS: §e#15",
-                                "§8» §7Points: §e#1"
-                        )
+                .setLoreWithList(
+                        " ",
+                        "§8» §7Kills: §e#20",
+                        "§8» §7KS: §e#15",
+                        "§8» §7Points: §e#1")
                 .build());
 
         insertInteractItem(inventory, 49, new ItemBuilder(Material.DARK_OAK_DOOR_ITEM)
@@ -75,8 +77,8 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         List<String> lore = new ArrayList<>(7);
 
         lore.add(" ");
-        lore.add("§8» §7Points: §6" + gamePlayer.getPoints().getWalletFormated());
-        lore.add("§8» §7Solde exact: §6" + gamePlayer.getPoints().getWalletFormated(Utils.complexDecimalFormat));
+        lore.add("§8» §7Points: §6" + getPoints().getWalletFormated());
+        lore.add("§8» §7Solde exact: §6" + getPoints().getWalletFormated(Utils.complexDecimalFormat));
 
         if (target != null) {
             lore.add(" ");
@@ -110,7 +112,7 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         lore.add(" ");
 
         for (CosmeticType type : CosmeticType.types) {
-            var cosmetic = gamePlayer.getSelectedCosmetics().get(type);
+            var cosmetic = getSelectedCosmetics().get(type);
 
             lore.add("§8» §7" + type.getDisplayName() + ": " + (cosmetic == null ? "§cN/A" : cosmetic.getName()));
         }
@@ -129,6 +131,34 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                         gamePlayer.sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage());
                     }
                 }));
+    }
+
+    private int getKills() {
+        return target == null ? gamePlayer.getKills() : target.getKills();
+    }
+
+    private int getDeaths() {
+        return target == null ? gamePlayer.getDeaths() : target.getDeaths();
+    }
+
+    private int getKillStreak() {
+        return target == null ? gamePlayer.getKillStreak() : target.getKillStreak();
+    }
+
+    private int getBestKillStreak() {
+        return target == null ? gamePlayer.getBestKillStreak() : target.getBestKillStreak();
+    }
+
+    private String getRatio() {
+        return target == null ? gamePlayer.getRatio() : target.getRatio();
+    }
+
+    private OneShotCoins getPoints() {
+        return target == null ? gamePlayer.getPoints() : target.getPoints();
+    }
+
+    private Map<CosmeticType, Cosmetic> getSelectedCosmetics() {
+        return target == null ? gamePlayer.getSelectedCosmetics() : target.getSelectedCosmetics();
     }
 
     private boolean hasRequiredRank() {

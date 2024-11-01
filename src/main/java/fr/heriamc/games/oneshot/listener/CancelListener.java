@@ -110,7 +110,7 @@ public record CancelListener(OneShotAddon addon, GameManager<OneShotGame> gameMa
     }
 
     @EventHandler
-    public void unHunger(FoodLevelChangeEvent event) {
+    public void onHunger(FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
 

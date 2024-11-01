@@ -77,6 +77,13 @@ public class OneShotPlayer extends FFAGamePlayer {
         resetKillStreak();
     }
 
+    public void reset() {
+        this.kills = 0;
+        this.deaths = 0;
+        this.killStreak = 0;
+        this.bestKillStreak = 0;
+    }
+
     public void cleanUp() {
         var inventory = player.getInventory();
 

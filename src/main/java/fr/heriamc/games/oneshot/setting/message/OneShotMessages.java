@@ -12,8 +12,13 @@ public enum OneShotMessages {
     PREFIX ("§6§lONESHOT §8┃ "),
 
     WELCOME_TITLE ("§e» §6§lOneShot §e«", "§fBon jeu !"),
+    WELCOME_MESSAGE (
+            "WELCOME MESSAGE",
+            "NEED TO BE SET"),
 
     MAX_BUILD_HEIGHT_REACHED ("§cLa hauteur maximale a été dépassée."),
+
+    SETTINGS_SUCCESSFUL_RESET_STATS ("§aVous avez réinitialiser vos statistiques avec succès ! %s"),
 
     SHOP_SELECT_COSMETIC ("§aVous avez équiper %s §a!"),
     SHOP_SUCCESSFUL_PURCHASE ("§aVous avez acheter %s §a!"),

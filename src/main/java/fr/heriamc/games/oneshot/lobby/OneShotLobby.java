@@ -13,6 +13,7 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
         super(OneShotLobbyItems.class);
     }
 
+    // FIRST JOIN
     @Override
     protected void processJoin(OneShotGame game, OneShotPlayer gamePlayer) {
         var rank = gamePlayer.getHeriaPlayer().getRank();
@@ -21,12 +22,15 @@ public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneSh
         gamePlayer.setTime(gamePlayer.getTime());
 
         NameTag.setNameTag(gamePlayer.getPlayer(), rank.getPrefix(), " ", rank.getTabPriority());
-        OneShotMessages.WELCOME_TITLE.sendAsTitle(gamePlayer , 20, 30, 20);
+        OneShotMessages.WELCOME_TITLE.sendAsTitle(gamePlayer, 20, 30, 20);
+        gamePlayer.sendMessage(OneShotMessages.WELCOME_MESSAGE.getMessages());
     }
 
+    // WHEN PLAYER DIE AND RETURN TO THE LOBBY
     @Override
     protected void processSetup(OneShotGame game, OneShotPlayer gamePlayer) {}
 
+    // WHEN PLAYER ENTER THE ARENA
     @Override
     protected void processPlay(OneShotGame game, OneShotPlayer gamePlayer) {
         gamePlayer.setGameMode(GameMode.SURVIVAL);

@@ -92,7 +92,6 @@ public class ProfileEditCoinsGui extends BaseGameGui<OneShotGame, OneShotPlayer>
 
                     gamePlayer.closeInventory();
                     gamePlayer.playSound(Sound.LEVEL_UP, 1f, 1f);
-                    gamePlayer.sendMessage("");
                     getPoints().setWallet(value);
                 }));
     }

@@ -55,8 +55,7 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                 .onClick(event -> event.getWhoClicked().sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage())));
     }
 
-    private void insertResetStatsButton(Inventory inventory, int price, int slot) {
-
+    private void insertResetStatsButton(Inventory inventory, double price, int slot) {
         insertInteractItem(inventory, slot, new ItemBuilder(Material.PAPER).setName("§7» §6Réinitialisation des statistiques")
                 .setLoreWithList(
                         " ",
@@ -64,10 +63,14 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                         "§ckills §7et votre record de §bkill streak",
                         "§7mais vous garderez vos §6points",
                         " ",
-                        "§8» §7Prix: §6" + price + " ⛃",
+                        "§8» §7Prix: §6" + (int) price + " ⛃",
                         " ",
                         "§6§l❱ §eClique pour réinitialiser")
-                .onClick(event -> {}));
+                .onClick(event -> {
+                    if (gamePlayer.getPoints().has(price)) {
+                        openGui(new ConfirmStatsResetGui(gamePlayer, price, this));
+                    }
+                }));
     }
 
     private void insertTimeChangerButton(Inventory inventory, int slot) {

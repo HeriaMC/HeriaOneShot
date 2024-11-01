@@ -6,7 +6,6 @@ import fr.heriamc.games.engine.utils.func.TriConsumer;
 import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.gui.cosmetic.CosmeticGui;
-import fr.heriamc.games.oneshot.gui.profile.ProfileGui;
 import fr.heriamc.games.oneshot.gui.setting.SettingGui;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
@@ -31,10 +30,6 @@ public enum OneShotLobbyItems implements FFAGameLobbyItems {
     SPECTATE (1,
             new ItemBuilder(Material.FEATHER).setName("§fSpectateur§8・§7Clic droit").build(),
             (addon, game, gamePlayer) -> gamePlayer.sendMessage(OneShotMessages.UNAVAILABLE_FUNCTIONALITY.getMessage())),
-
-    TEST (2,
-            new ItemBuilder(Material.SKULL_ITEM).setName("TEST DU PROFILE").build(),
-            (addon, game, gamePlayer) -> addon.openGui(new ProfileGui(game, gamePlayer, gamePlayer, null))),
 
     COSMETICS (4,
             new ItemBuilder(Material.CHEST).setName("§eCosmétiques§8・§7Clic droit").build(),

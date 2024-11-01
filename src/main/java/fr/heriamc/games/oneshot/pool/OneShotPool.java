@@ -15,7 +15,7 @@ public class OneShotPool extends GamePool<OneShotGame> {
     private OneShotDataManager dataManager;
 
     public OneShotPool() {
-        super(OneShotGame.class, "OneShot Pool", HeriaServerType.ONESHOT, 1, 5, DirectConnectStrategy.FILL_GAME);
+        super(OneShotGame.class, "OneShot Pool", HeriaServerType.ONESHOT, 0, 5, DirectConnectStrategy.FILL_GAME);
     }
 
     @Override

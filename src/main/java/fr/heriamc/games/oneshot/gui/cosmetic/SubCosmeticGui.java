@@ -49,7 +49,7 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
     @Override
     protected ItemBuilder item(C cosmetic, int i, int i1) {
         var icon = new ItemBuilder(cosmetic.getIcon());
-        List<String> lore = new ArrayList<>();
+        List<String> lore = new ArrayList<>(5);
 
         if (cosmetic.isSelected(gamePlayer))
             icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
@@ -94,7 +94,7 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
                     }
 
                     if (!cosmetic.has(gamePlayer) && cosmetic.canBuy(gamePlayer))
-                        openGui(new ConfirmPurchaseGui(gamePlayer, this, cosmetic));
+                        openGui(new ConfirmCosmeticPurchaseGui(gamePlayer, cosmetic, this));
                 });
     }
 

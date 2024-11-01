@@ -4,14 +4,66 @@ import fr.heriamc.api.user.rank.HeriaRank;
 import fr.heriamc.bukkit.command.CommandArgs;
 import fr.heriamc.bukkit.command.HeriaCommand;
 import fr.heriamc.games.api.pool.GameManager;
+import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.cosmetic.CosmeticType;
+import fr.heriamc.games.oneshot.gui.profile.ProfileGui;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
+import org.bukkit.Bukkit;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public record DebugCommand(GameManager<OneShotGame> gameManager) {
+public record OneShotCommand(OneShotAddon addon, GameManager<OneShotGame> gameManager) {
+
+    /*
+        PROFILE
+     */
+
+    @HeriaCommand(name = "profile", power = HeriaRank.PLAYER, description = "Permet d'afficher son profile ou celui d'un autre joueur")
+    public void profile(CommandArgs commandArgs) {
+        var player = commandArgs.getPlayer();
+        var game = gameManager.getNullableGame(player);
+
+        if (game == null) return;
+
+        var gamePlayer = game.getNullablePlayer(player);
+
+        if (gamePlayer == null) return;
+
+        var args = commandArgs.getArgs();
+
+        if (args == null || args.length == 0 || args[0] == null) {
+            addon.openGui(new ProfileGui(game, gamePlayer, null));
+            return;
+        }
+
+        if (args[0].equals(player.getName())) {
+            addon.openGui(new ProfileGui(game, gamePlayer, null));
+            return;
+        }
+
+        var targetPlayer = Bukkit.getPlayer(args[0]);
+
+        if (targetPlayer == null || !targetPlayer.isOnline()) {
+            System.out.println("PLAYER IS OFFLINE NEED TO OPEN GUI WITH DATA MANAGER");
+            return;
+        }
+
+        if (targetPlayer.equals(player)) {
+            addon.openGui(new ProfileGui(game, gamePlayer, null));
+            return;
+        }
+
+        var targetGamePlayer = game.getNullablePlayer(targetPlayer);
+
+        if (targetGamePlayer == null) {
+            System.out.println("GAMEPLAYER OFFLINE OR NULL NEED TO OPEN GUI WITH DATA MANAGER");
+            return;
+        }
+
+        addon.openGui(new ProfileGui(game, gamePlayer, targetGamePlayer, null));
+    }
 
     /*
         COINS
@@ -86,7 +138,7 @@ public record DebugCommand(GameManager<OneShotGame> gameManager) {
         COSMETICS
      */
 
-    @HeriaCommand(name = "select", power = HeriaRank.PLAYER, description = "Vous permet de choisir un cosmétique")
+    @HeriaCommand(name = "select", power = HeriaRank.PLAYER, description = "Vous permet de choisir un cosmétique", showInHelp = false)
     public void selectCosmetic(CommandArgs commandArgs) {
         var player = commandArgs.getPlayer();
         var game = gameManager.getNullableGame(player);

@@ -1,7 +1,7 @@
 package fr.heriamc.games.oneshot;
 
 import fr.heriamc.games.api.addon.GameAddon;
-import fr.heriamc.games.oneshot.command.DebugCommand;
+import fr.heriamc.games.oneshot.command.OneShotCommand;
 import fr.heriamc.games.oneshot.data.OneShotDataManager;
 import fr.heriamc.games.oneshot.listener.*;
 import fr.heriamc.games.oneshot.pool.OneShotPool;
@@ -31,7 +31,7 @@ public class OneShotAddon extends GameAddon<OneShotPool> {
                 new PlayerChatListener()
         );
 
-        registerCommand(new DebugCommand(pool.getGamesManager()));
+        registerCommand(new OneShotCommand(this, pool.getGamesManager()));
     }
 
     @Override

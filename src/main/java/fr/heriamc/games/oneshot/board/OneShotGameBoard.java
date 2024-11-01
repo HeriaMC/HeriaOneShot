@@ -12,7 +12,7 @@ public class OneShotGameBoard extends GameBoard<OneShotGame, OneShotPlayer> {
     public OneShotGameBoard(OneShotGame game, OneShotPlayer gamePlayer) {
         super(game, gamePlayer);
         this.wallet = "0 ⛃";
-        this.ratio = "0";
+        this.ratio = "0.0";
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OneShotGameBoard extends GameBoard<OneShotGame, OneShotPlayer> {
         objectiveSign.setDisplayName("§e§l» §6§lOneShot §e§l«");
 
         objectiveSign.setLine(0, "§1");
-        objectiveSign.setLine(2, "§8■ §7Points : §6" + (wallet == null ? 0 : wallet));
+        objectiveSign.setLine(2, "§8■ §7Points : §6" + wallet);
         objectiveSign.setLine(3, "§2");
         objectiveSign.setLine(4, "§8■ §7Tué(s) : §c" + kills);
         objectiveSign.setLine(5, "§8■ §7Mort(s) : §c" + deaths);

@@ -119,6 +119,7 @@ public class PlayerDamageListener implements Listener {
 
             if (gamePlayer == null) return;
 
+            // NEED TO BE RETURN ?
             if (gamePlayer.getState() == FFAGamePlayerState.IN_LOBBY)
                 event.setCancelled(true);
 
