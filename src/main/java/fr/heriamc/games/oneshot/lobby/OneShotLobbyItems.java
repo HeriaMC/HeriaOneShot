@@ -48,7 +48,7 @@ public enum OneShotLobbyItems implements FFAGameLobbyItems {
 
     private static final List<OneShotLobbyItems> items = Arrays.asList(values());
 
-    public static Optional<OneShotLobbyItems> getLobbyItem(ItemStack itemStack){
+    public static Optional<OneShotLobbyItems> getLobbyItem(ItemStack itemStack) {
         return items.stream().filter(lobbyItems -> lobbyItems.getItemStack().equals(itemStack)).findFirst();
     }
 

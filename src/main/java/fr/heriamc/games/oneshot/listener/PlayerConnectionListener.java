@@ -51,7 +51,7 @@ public record PlayerConnectionListener(HeriaAPI heriaAPI, OneShotDataManager dat
             gamePlayerData.updateStats(gamePlayer);
             heriaAPI.getUnlockableManager().save(gamePlayer.getUnlockedCosmetics());
             dataManager.save(gamePlayerData);
-            //dataManager.saveInPersistant(gamePlayerData);
+            dataManager.saveInPersistant(gamePlayerData);
         });
     }
 

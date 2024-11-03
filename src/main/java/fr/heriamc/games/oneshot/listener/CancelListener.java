@@ -5,6 +5,7 @@ import fr.heriamc.games.engine.utils.MaterialUtils;
 import fr.heriamc.games.oneshot.OneShotAddon;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.lobby.OneShotLobbyItems;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +52,28 @@ public record CancelListener(OneShotAddon addon, GameManager<OneShotGame> gameMa
 
                 event.setCancelled(true);
             }
-            case IN_GAME -> event.setCancelled(false);
+            case IN_GAME -> {
+                var itemStack  = event.getItem();
+
+                event.setCancelled(false);
+
+                // REWORK THIS
+                if (itemStack != null
+                        && itemStack.getType() == Material.BOW
+                        && itemStack.hasItemMeta()) {
+
+                    if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
+                        var vector = player.getLocation().getDirection();
+
+                        vector.multiply(-1);
+                        vector.setY(0);
+                        vector = vector.normalize().multiply(1.5);
+
+                        player.setVelocity(vector);
+                    }
+                }
+
+            }
         }
     }
 
