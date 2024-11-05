@@ -10,12 +10,6 @@ public class BloodEffect implements KillEffectTask {
 
     @Override
     public void run(OneShotPlayer gamePlayer, Location location) {
-        var players = getPlayersAround(location, 20, 20, 20);
-        var player = gamePlayer.getPlayer();
-
-        if (!players.contains(player))
-            players.add(player);
-
         var loc = location.add(0, 1, 0);
         var redstone = new ParticleEffect.ItemData(Material.REDSTONE, (byte) 0);
         var redstoneBlock = new ParticleEffect.BlockData(Material.REDSTONE_BLOCK, (byte) 0);
