@@ -13,7 +13,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.DyeColor;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 public class ConfirmCosmeticPurchaseGui extends ConfirmPurchaseGui {
 
@@ -43,7 +42,7 @@ public class ConfirmCosmeticPurchaseGui extends ConfirmPurchaseGui {
 
         inventory.setItem(4, new ItemBuilder(cosmetic.getIcon())
                 .setName(cosmetic.getName())
-                .flag(ItemFlag.HIDE_ATTRIBUTES)
+                .allFlags()
                 .setLoreWithList(
                         " ",
                         "§8» §7Prix: §6" + cosmetic.getPrice() + " ⛃",

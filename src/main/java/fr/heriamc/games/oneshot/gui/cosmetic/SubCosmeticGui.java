@@ -12,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +51,7 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
         List<String> lore = new ArrayList<>(5);
 
         if (cosmetic.isSelected(gamePlayer))
-            icon.addEnchant(Enchantment.DAMAGE_ALL, 1).flag(ItemFlag.HIDE_ENCHANTS);
+            icon.addEnchant(Enchantment.DAMAGE_ALL, 1).allFlags();
 
         if (!cosmetic.isPurchasable())
             lore.addAll(Arrays.asList(
@@ -77,7 +76,7 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
 
         return icon.setName(cosmetic.isSelected(gamePlayer) ? cosmetic.getName() + " §a[Sélectionner]" : cosmetic.getName())
                 .setLoreWithList(lore)
-                .flag(ItemFlag.HIDE_ATTRIBUTES)
+                .allFlags()
                 .onClick(event -> {
                     if (cosmetic.hasRequiredRank(gamePlayer) && !cosmetic.isPurchasable() && !cosmetic.isSelected(gamePlayer)) {
                         cosmetic.select(gamePlayer);
@@ -109,7 +108,7 @@ public abstract class SubCosmeticGui<C extends Enum<C> & Cosmetic> extends BaseG
     }
 
     protected void insertCategoryIcon(Inventory inventory, Material material, String displayName) {
-        inventory.setItem(4, new ItemBuilder(material).setName(displayName).flag(ItemFlag.HIDE_ATTRIBUTES).build());
+        inventory.setItem(4, new ItemBuilder(material).setName(displayName).allFlags().build());
     }
 
     protected void insertCloseButton(Inventory inventory, int slot) {

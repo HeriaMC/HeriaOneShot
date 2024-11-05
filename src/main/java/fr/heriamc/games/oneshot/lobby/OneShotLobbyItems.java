@@ -12,7 +12,6 @@ import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -24,7 +23,7 @@ import java.util.Optional;
 public enum OneShotLobbyItems implements FFAGameLobbyItems {
 
     PLAY (0,
-            new ItemBuilder(Material.IRON_AXE).setName("§6Jouer§8・§7Clic droit").setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build(),
+            new ItemBuilder(Material.IRON_AXE).setName("§6Jouer§8・§7Clic droit").setInfinityDurability().allFlags().build(),
             (addon, game, gamePlayer) -> game.play(gamePlayer)),
 
     SPECTATE (1,

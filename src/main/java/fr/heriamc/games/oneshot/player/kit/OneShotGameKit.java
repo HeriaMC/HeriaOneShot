@@ -28,10 +28,10 @@ public class OneShotGameKit extends GamePlayerKit<OneShotPlayer> {
     @Override
     public void setup() {
         setItem(0, new ItemBuilder(swordCosmetic.getSword()).setName("§6Épée §8(§73 coups§8)")
-                .setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build());
+                .setInfinityDurability().allFlags().build());
 
         setItem(1, new ItemBuilder(Material.BOW)
-                .setName("§6Arc §8(§71 coup§8)").setInfinityDurability().flag(ItemFlag.HIDE_UNBREAKABLE).build());
+                .setName("§6Arc §8(§71 coup§8)").setInfinityDurability().allFlags().build());
 
         setItem(2, new ItemBuilder(Material.DIAMOND_PICKAXE)
                 .setName("§6Pioche §8(§7Efficacité 4§8)")
@@ -49,7 +49,7 @@ public class OneShotGameKit extends GamePlayerKit<OneShotPlayer> {
     }
 
     public void changeSword(Material material) {
-        setItem(0, new ItemBuilder(material).setName("§6Épée §8(§73 coups§8)").setInfinityDurability().flag(ItemFlag.HIDE_ATTRIBUTES).flag(ItemFlag.HIDE_UNBREAKABLE).build());
+        setItem(0, new ItemBuilder(material).setName("§6Épée §8(§73 coups§8)").setInfinityDurability().allFlags().build());
     }
 
     // REMAKE THIS

@@ -15,7 +15,6 @@ import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class ProfileGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
                         "§8» §7Meilleur KS: §a" + getBestKillStreak(),
                         " ",
                         "§8» §7Ratio: §d" + getRatio())
-                .flag(ItemFlag.HIDE_ATTRIBUTES).build());
+                .allFlags().build());
 
         insertPointsButton(inventory, 22);
         insertCosmeticButton(inventory, 23);

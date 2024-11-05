@@ -12,7 +12,6 @@ import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 public class CosmeticGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
@@ -35,7 +34,7 @@ public class CosmeticGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
         insertInteractItem(inventory, 31, new ItemBuilder(Material.STAINED_CLAY).setName("§7» §6Blocs")
                 .onClick(event -> openGui(new BlockGui(game, gamePlayer, this))));
 
-        insertInteractItem(inventory, 32, new ItemBuilder(Material.DIAMOND_SWORD).setName("§7» §6Épée").flag(ItemFlag.HIDE_ATTRIBUTES)
+        insertInteractItem(inventory, 32, new ItemBuilder(Material.DIAMOND_SWORD).setName("§7» §6Épée").allFlags()
                 .onClick(event -> openGui(new SwordGui(game, gamePlayer, this))));
 
         insertInteractItem(inventory, 49, new ItemBuilder(Material.DARK_OAK_DOOR_ITEM).setName("§c→ Fermer le menu")

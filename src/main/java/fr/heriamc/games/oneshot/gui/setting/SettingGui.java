@@ -10,7 +10,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 
 public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
@@ -44,7 +43,7 @@ public class SettingGui extends BaseGameGui<OneShotGame, OneShotPlayer> {
 
     private void insertEditKitButton(Inventory inventory, int slot) {
         insertInteractItem(inventory, slot, new ItemBuilder(Material.DIAMOND_SWORD).setName("§7» §6Éditer votre kit")
-                .flag(ItemFlag.HIDE_ATTRIBUTES)
+                .allFlags()
                 .setLoreWithList(
                         " ",
                         "§7Vous pouvez choisir l'emplacement",
