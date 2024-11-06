@@ -1,10 +1,10 @@
 package fr.heriamc.games.oneshot.lobby;
 
 import fr.heriamc.games.engine.ffa.lobby.FFAGameLobby;
+import fr.heriamc.games.engine.utils.NameTag;
 import fr.heriamc.games.oneshot.OneShotGame;
 import fr.heriamc.games.oneshot.player.OneShotPlayer;
 import fr.heriamc.games.oneshot.setting.message.OneShotMessages;
-import fr.heriamc.games.oneshot.utils.NameTag;
 import org.bukkit.GameMode;
 
 public class OneShotLobby extends FFAGameLobby<OneShotGame, OneShotPlayer, OneShotLobbyItems> {
